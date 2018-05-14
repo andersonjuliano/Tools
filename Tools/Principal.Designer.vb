@@ -29,6 +29,8 @@ Partial Class Principal
         Me.log = New System.Windows.Forms.ListBox()
         Me.pnlbuttons = New System.Windows.Forms.Panel()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.btnCriarPastas = New System.Windows.Forms.Button()
+        Me.btnPasta = New System.Windows.Forms.Button()
         Me.btnCorrigeRoms = New System.Windows.Forms.Button()
         Me.btnCorrigeSerie = New System.Windows.Forms.Button()
         Me.btnRomsDs = New System.Windows.Forms.Button()
@@ -40,6 +42,7 @@ Partial Class Principal
         Me.pnlCheckBox = New System.Windows.Forms.Panel()
         Me.ckbNumerados = New System.Windows.Forms.CheckBox()
         Me.ckbRecursivo = New System.Windows.Forms.CheckBox()
+        Me.cbkMudaExt = New System.Windows.Forms.CheckBox()
         Me.ckbFilmes = New System.Windows.Forms.CheckBox()
         Me.ckbScan = New System.Windows.Forms.CheckBox()
         Me.ckbPreservaExtensao = New System.Windows.Forms.CheckBox()
@@ -48,18 +51,18 @@ Partial Class Principal
         Me.ckbArquivo = New System.Windows.Forms.CheckBox()
         Me.ckbPasta = New System.Windows.Forms.CheckBox()
         Me.pnlLog = New System.Windows.Forms.Panel()
+        Me.logErro = New System.Windows.Forms.ListBox()
         Me.pnlDataGrid = New System.Windows.Forms.Panel()
         Me.dg = New System.Windows.Forms.DataGridView()
+        Me.de = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.para = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.incluir = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.mensagem = New System.Windows.Forms.ToolStripStatusLabel()
         Me.pBar = New System.Windows.Forms.ToolStripProgressBar()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.logErro = New System.Windows.Forms.ListBox()
-        Me.de = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.para = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.incluir = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pnlbuttons.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.pnlCheckBox.SuspendLayout()
@@ -111,6 +114,8 @@ Partial Class Principal
         'Panel1
         '
         Me.Panel1.AutoScroll = True
+        Me.Panel1.Controls.Add(Me.btnCriarPastas)
+        Me.Panel1.Controls.Add(Me.btnPasta)
         Me.Panel1.Controls.Add(Me.btnCorrigeRoms)
         Me.Panel1.Controls.Add(Me.btnCorrigeSerie)
         Me.Panel1.Controls.Add(Me.btnRomsDs)
@@ -124,8 +129,26 @@ Partial Class Principal
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(717, 89)
+        Me.Panel1.Size = New System.Drawing.Size(683, 89)
         Me.Panel1.TabIndex = 14
+        '
+        'btnCriarPastas
+        '
+        Me.btnCriarPastas.Location = New System.Drawing.Point(580, 38)
+        Me.btnCriarPastas.Name = "btnCriarPastas"
+        Me.btnCriarPastas.Size = New System.Drawing.Size(89, 23)
+        Me.btnCriarPastas.TabIndex = 15
+        Me.btnCriarPastas.Text = "Criar Pasta"
+        Me.btnCriarPastas.UseVisualStyleBackColor = True
+        '
+        'btnPasta
+        '
+        Me.btnPasta.Location = New System.Drawing.Point(580, 9)
+        Me.btnPasta.Name = "btnPasta"
+        Me.btnPasta.Size = New System.Drawing.Size(89, 23)
+        Me.btnPasta.TabIndex = 15
+        Me.btnPasta.Text = "Pasta"
+        Me.btnPasta.UseVisualStyleBackColor = True
         '
         'btnCorrigeRoms
         '
@@ -203,6 +226,7 @@ Partial Class Principal
         '
         Me.pnlCheckBox.Controls.Add(Me.ckbNumerados)
         Me.pnlCheckBox.Controls.Add(Me.ckbRecursivo)
+        Me.pnlCheckBox.Controls.Add(Me.cbkMudaExt)
         Me.pnlCheckBox.Controls.Add(Me.ckbFilmes)
         Me.pnlCheckBox.Controls.Add(Me.ckbScan)
         Me.pnlCheckBox.Controls.Add(Me.ckbPreservaExtensao)
@@ -211,9 +235,9 @@ Partial Class Principal
         Me.pnlCheckBox.Controls.Add(Me.ckbArquivo)
         Me.pnlCheckBox.Controls.Add(Me.ckbPasta)
         Me.pnlCheckBox.Dock = System.Windows.Forms.DockStyle.Right
-        Me.pnlCheckBox.Location = New System.Drawing.Point(717, 0)
+        Me.pnlCheckBox.Location = New System.Drawing.Point(683, 0)
         Me.pnlCheckBox.Name = "pnlCheckBox"
-        Me.pnlCheckBox.Size = New System.Drawing.Size(352, 89)
+        Me.pnlCheckBox.Size = New System.Drawing.Size(386, 89)
         Me.pnlCheckBox.TabIndex = 13
         '
         'ckbNumerados
@@ -237,6 +261,16 @@ Partial Class Principal
         Me.ckbRecursivo.TabIndex = 12
         Me.ckbRecursivo.Text = "Recursivo"
         Me.ckbRecursivo.UseVisualStyleBackColor = True
+        '
+        'cbkMudaExt
+        '
+        Me.cbkMudaExt.AutoSize = True
+        Me.cbkMudaExt.Location = New System.Drawing.Point(285, 20)
+        Me.cbkMudaExt.Name = "cbkMudaExt"
+        Me.cbkMudaExt.Size = New System.Drawing.Size(68, 17)
+        Me.cbkMudaExt.TabIndex = 12
+        Me.cbkMudaExt.Text = "rar -> cbr"
+        Me.cbkMudaExt.UseVisualStyleBackColor = True
         '
         'ckbFilmes
         '
@@ -330,6 +364,17 @@ Partial Class Principal
         Me.pnlLog.Size = New System.Drawing.Size(1069, 332)
         Me.pnlLog.TabIndex = 5
         '
+        'logErro
+        '
+        Me.logErro.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.logErro.FormattingEnabled = True
+        Me.logErro.Location = New System.Drawing.Point(0, 224)
+        Me.logErro.Name = "logErro"
+        Me.logErro.ScrollAlwaysVisible = True
+        Me.logErro.Size = New System.Drawing.Size(1069, 108)
+        Me.logErro.TabIndex = 3
+        Me.logErro.Visible = False
+        '
         'pnlDataGrid
         '
         Me.pnlDataGrid.Controls.Add(Me.dg)
@@ -348,6 +393,24 @@ Partial Class Principal
         Me.dg.Name = "dg"
         Me.dg.Size = New System.Drawing.Size(1069, 122)
         Me.dg.TabIndex = 0
+        '
+        'de
+        '
+        Me.de.HeaderText = "De"
+        Me.de.Name = "de"
+        Me.de.Width = 280
+        '
+        'para
+        '
+        Me.para.HeaderText = "Para"
+        Me.para.Name = "para"
+        Me.para.Width = 280
+        '
+        'incluir
+        '
+        Me.incluir.HeaderText = "Incluir"
+        Me.incluir.Name = "incluir"
+        Me.incluir.Width = 280
         '
         'OpenFileDialog1
         '
@@ -377,35 +440,6 @@ Partial Class Principal
         Me.pBar.Size = New System.Drawing.Size(300, 16)
         Me.pBar.Step = 1
         Me.pBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
-        '
-        'logErro
-        '
-        Me.logErro.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.logErro.FormattingEnabled = True
-        Me.logErro.Location = New System.Drawing.Point(0, 224)
-        Me.logErro.Name = "logErro"
-        Me.logErro.ScrollAlwaysVisible = True
-        Me.logErro.Size = New System.Drawing.Size(1069, 108)
-        Me.logErro.TabIndex = 3
-        Me.logErro.Visible = False
-        '
-        'de
-        '
-        Me.de.HeaderText = "De"
-        Me.de.Name = "de"
-        Me.de.Width = 280
-        '
-        'para
-        '
-        Me.para.HeaderText = "Para"
-        Me.para.Name = "para"
-        Me.para.Width = 280
-        '
-        'incluir
-        '
-        Me.incluir.HeaderText = "Incluir"
-        Me.incluir.Name = "incluir"
-        Me.incluir.Width = 280
         '
         'Principal
         '
@@ -470,4 +504,7 @@ Partial Class Principal
     Friend WithEvents de As DataGridViewTextBoxColumn
     Friend WithEvents para As DataGridViewTextBoxColumn
     Friend WithEvents incluir As DataGridViewTextBoxColumn
+    Friend WithEvents cbkMudaExt As CheckBox
+    Friend WithEvents btnPasta As Button
+    Friend WithEvents btnCriarPastas As Button
 End Class

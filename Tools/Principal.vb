@@ -586,6 +586,14 @@ Public Class Principal
                         'old = old.Substring(0, old.LastIndexOf("."))
                     End If
                 End If
+                If cbkMudaExt.Checked Then
+                    If vextensao.Trim.ToUpper = ".ZIP" Then
+                        vextensao = ".cbz"
+                    End If
+                    If vextensao.Trim.ToUpper = ".RAR" Then
+                        vextensao = ".cbr"
+                    End If
+                End If
                 i = 0
                 If VerificaArquivo(old) Then 'Not (old & vextensao = "Ionic.Zip.dll" Or old & vextensao = "ZipTools.exe") Then
 
@@ -1866,6 +1874,91 @@ Public Class Principal
 
     End Sub
 
+    Private Sub btnPasta_Click(sender As Object, e As EventArgs) Handles btnPasta.Click
+        For Each arq As String In Directory.GetDirectories(CurDir)
 
+            Dim vnew As String = arq.Substring(arq.LastIndexOf("\") + 1, arq.Length - arq.LastIndexOf("\") - 1).Trim
+            Dim old As String = arq.Substring(arq.LastIndexOf("\") + 1, arq.Length - arq.LastIndexOf("\") - 1)
+
+            Add("Renomeando pasta:    " & vnew)
+
+            If vnew.IndexOf("(") = 0 Then
+                vnew = vnew.Substring(vnew.IndexOf(")") + 1, vnew.Length - vnew.IndexOf(")") - 1).Trim & " " & vnew.Substring(0, vnew.IndexOf(")") + 1)
+            End If
+
+            For Each dr As DataGridViewRow In dg.Rows
+                vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
+            Next
+            ProperCase(vnew)
+
+            For Each dr As DataGridViewRow In dg.Rows
+                vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
+            Next
+
+            If ckbScan.AutoCheck Then
+                vnew = EspecificoScan(vnew)
+
+            End If
+            If Not old = vnew Then
+                Try
+                    'nesta caso somente foi alterado letras maiuscula <-> minúsculas
+                    If old.ToUpper = vnew.ToUpper Then
+                        'muda o nome do arquivo antigo
+                        old = "temp" & Now.ToString("HHmmss")
+                        My.Computer.FileSystem.RenameDirectory(arq, old)
+
+                        'copia novamente para o nome novo
+                        My.Computer.FileSystem.RenameDirectory(arq.Substring(0, arq.LastIndexOf("\") + 1) & old, Trim(vnew))
+
+                        'faz uma cópia com o nome novo
+                        'My.Computer.FileSystem.CopyFile(arq, Trim(vnew))
+                        'deleta o antigo
+                        'My.Computer.FileSystem.DeleteFile(arq)
+                    Else
+                        DiretoriosRenomeados += 1
+                        old = vnew
+                        Dim i As Integer = 0
+                        While True
+                            If Not IO.File.Exists(vnew.Trim) Then
+                                My.Computer.FileSystem.RenameDirectory(arq, Trim(vnew))
+                                Exit While
+                            Else
+                                i += 1
+                                Dim arr() As String = RetornaExtensao(old.Trim)
+                                vnew = arr(0) & "(" & i & ")" & arr(1)
+                            End If
+                            If i = 999 Then
+                                Exit While
+                            End If
+                        End While
+                    End If
+                Catch ex As Exception
+                    AddErro(ex.Message)
+                End Try
+            End If
+        Next
+        Add("Processo concluido")
+    End Sub
+
+    Private Sub btnCriarPastas_Click(sender As Object, e As EventArgs) Handles btnCriarPastas.Click
+
+        For Each arq As String In Directory.GetFiles(CurDir)
+
+            If Not Path.GetFileName(arq).ToUpper = "TOOLS.EXE" Then
+                Dim newFolder As String = Path.GetFileNameWithoutExtension(arq)
+                Try
+                    If Not Directory.Exists(newFolder) Then
+                        Directory.CreateDirectory(newFolder)
+                    End If
+                    File.Move(arq, CurDir() & "\" & newFolder & "\" & Path.GetFileName(arq))
+                Catch ex As Exception
+                    AddErro("Não foi possivel mover o arquivo: " & Path.GetFileName(arq))
+                End Try
+            End If
+
+        Next
+        Add("Processo concluido")
+
+    End Sub
 
 End Class
