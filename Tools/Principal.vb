@@ -576,21 +576,20 @@ Public Class Principal
                 vextensao = ""
 
 
-                Dim vnew As String = arq.Substring(arq.LastIndexOf("\") + 1, arq.Length - arq.LastIndexOf("\") - 1)
-                Dim old As String = arq.Substring(arq.LastIndexOf("\") + 1, arq.Length - arq.LastIndexOf("\") - 1)
+                Dim vnew As String = Path.GetFileName(arq) 'arq.Substring(arq.LastIndexOf("\") + 1, arq.Length - arq.LastIndexOf("\") - 1)
+                Dim old As String = Path.GetFileName(arq) 'arq.Substring(arq.LastIndexOf("\") + 1, arq.Length - arq.LastIndexOf("\") - 1)
 
                 If ckbPreservaExtensao.Checked Then
                     If vnew.LastIndexOf(".") > -1 Then
-                        vextensao = vnew.Substring(vnew.LastIndexOf("."), vnew.Length - vnew.LastIndexOf(".")).ToLower
-                        vnew = vnew.Substring(0, vnew.LastIndexOf("."))
-                        'old = old.Substring(0, old.LastIndexOf("."))
+                        vextensao = Path.GetExtension(arq).ToLower
+                        vnew = Path.GetFileNameWithoutExtension(arq)
                     End If
                 End If
                 If cbkMudaExt.Checked Then
-                    If vextensao.Trim.ToUpper = ".ZIP" Then
+                    If vextensao = ".zip" Then
                         vextensao = ".cbz"
                     End If
-                    If vextensao.Trim.ToUpper = ".RAR" Then
+                    If vextensao = ".rar" Then
                         vextensao = ".cbr"
                     End If
                 End If
@@ -1939,7 +1938,6 @@ Public Class Principal
         Next
         Add("Processo concluido")
     End Sub
-
     Private Sub btnCriarPastas_Click(sender As Object, e As EventArgs) Handles btnCriarPastas.Click
 
         For Each arq As String In Directory.GetFiles(CurDir)
