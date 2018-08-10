@@ -594,7 +594,7 @@ Public Class Principal
                     End If
                 End If
                 i = 0
-                If VerificaArquivo(old) Then 'Not (old & vextensao = "Ionic.Zip.dll" Or old & vextensao = "ZipTools.exe") Then
+                If VerificaArquivo(old) Then
 
                     Add("Renomeando arquivo: " & vnew)
                     For Each dr As DataGridViewRow In dg.Rows
@@ -739,7 +739,7 @@ Public Class Principal
                                         End If
                                     End If
                                 End If
-                                End If
+                            End If
                         Next
 
 
@@ -890,54 +890,54 @@ Public Class Principal
 
                     If ckbFilmes.Checked Then
                         'procedimento especiais para filmes
-                        Filmes(vnew)
+                        EspecificosFilmes(vnew)
                     End If
                     'retira os espaços antes e depois
                     vnew = vnew.Trim
 
-                        'sempre deixa a extensão em letra minúscula
-                        vextensao = vextensao.ToLower
+                    'sempre deixa a extensão em letra minúscula
+                    vextensao = vextensao.ToLower
 
-                        If Not old = vnew & vextensao Then
-                            Try
-                                'nesta caso somente foi alterado letras maiuscula <-> minúsculas
-                                If old.ToUpper = vnew.ToUpper & vextensao.ToUpper Then
+                    If Not old = vnew & vextensao Then
+                        Try
+                            'nesta caso somente foi alterado letras maiuscula <-> minúsculas
+                            If old.ToUpper = vnew.ToUpper & vextensao.ToUpper Then
 
-                                    'coloca um nome temporário no arquivo
-                                    old = "temp" & Now.ToString("HHmmss")
-                                    My.Computer.FileSystem.RenameFile(arq, old)
+                                'coloca um nome temporário no arquivo
+                                old = "temp" & Now.ToString("HHmmss")
+                                My.Computer.FileSystem.RenameFile(arq, old)
 
-                                    'copia novamente para o nome novo
-                                    My.Computer.FileSystem.RenameFile(arq.Substring(0, arq.LastIndexOf("\") + 1) & old, vnew.Trim & vextensao.Trim)
+                                'copia novamente para o nome novo
+                                My.Computer.FileSystem.RenameFile(arq.Substring(0, arq.LastIndexOf("\") + 1) & old, vnew.Trim & vextensao.Trim)
 
-                                    'faz uma cópia com o nome novo
-                                    'My.Computer.FileSystem.CopyFile(arq, Trim(vnew))
-                                    'deleta o antigo
-                                    'My.Computer.FileSystem.DeleteFile(arq)
-                                Else
-                                    ArquivosRenomeados += 1
-                                    Dim vnewTemp As String = vnew
-                                    i = 0
-                                    While True
-                                        If Not IO.File.Exists(vnew.Trim & vextensao) Then
-                                            My.Computer.FileSystem.RenameFile(arq, Trim(vnew & vextensao))
-                                            Exit While
-                                        Else
-                                            i += 1
-                                            'Dim arr() As String = RetornaExtensao(vnewTemp.Trim & vextensao)
-                                            vnew = vnewTemp & " (" & i & ")" '& vextensao
-                                        End If
-                                        If i = 999 Then
-                                            Exit While
-                                        End If
-                                    End While
-                                End If
+                                'faz uma cópia com o nome novo
+                                'My.Computer.FileSystem.CopyFile(arq, Trim(vnew))
+                                'deleta o antigo
+                                'My.Computer.FileSystem.DeleteFile(arq)
+                            Else
+                                ArquivosRenomeados += 1
+                                Dim vnewTemp As String = vnew
+                                i = 0
+                                While True
+                                    If Not IO.File.Exists(vnew.Trim & vextensao) Then
+                                        My.Computer.FileSystem.RenameFile(arq, Trim(vnew & vextensao))
+                                        Exit While
+                                    Else
+                                        i += 1
+                                        'Dim arr() As String = RetornaExtensao(vnewTemp.Trim & vextensao)
+                                        vnew = vnewTemp & " (" & i & ")" '& vextensao
+                                    End If
+                                    If i = 999 Then
+                                        Exit While
+                                    End If
+                                End While
+                            End If
 
-                            Catch ex As Exception
-                                AddErro(ex.Message)
-                            End Try
-                        End If
+                        Catch ex As Exception
+                            AddErro(ex.Message)
+                        End Try
                     End If
+                End If
             Next
         End If
 
@@ -954,7 +954,13 @@ Public Class Principal
                 Add("Renomeando pasta:    " & vnew)
 
                 'renomeia a pasta com o nome do filme também
-                Filmes(vnew)
+
+                If ckbFilmes.Checked Then
+                    'procedimento especiais para filmes
+                    EspecificosFilmes(vnew)
+                End If
+
+
 
                 For Each dr As DataGridViewRow In dg.Rows
                     vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
@@ -965,36 +971,10 @@ Public Class Principal
                     vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
                 Next
 
-                If ckbScan.AutoCheck Then
+                If ckbScan.Checked Then
                     vnew = EspecificoScan(vnew)
-
-                    'vnew = vnew.Replace("2000Ad", "2000AD")
-                    'vnew = vnew.Replace("Dmz", "DMZ")
-                    'vnew = vnew.Replace("Ff ", "FF ")
-
-                    'vnew = vnew.Replace("_ ", " - ")
-
-                    'If vnew.ToUpper.Contains("L E G I Ã O") Then
-                    '    vnew = StrConv(vnew, VbStrConv.ProperCase)
-                    '    vnew = vnew.Replace("L E G I Ã O", "L.E.G.I.Ã.O")
-                    'End If
-                    'If vnew.ToUpper.Contains("L E G I A O") Then
-                    '    vnew = StrConv(vnew, VbStrConv.ProperCase)
-                    '    vnew = vnew.Replace("L E G I A O", "L.E.G.I.Ã.O")
-                    'End If
-                    'If vnew.ToUpper.Contains("H A R D") Then
-                    '    vnew = StrConv(vnew, VbStrConv.ProperCase)
-                    '    vnew = vnew.Replace("H A R D", "H.A.R.D.")
-                    'End If
-                    'If vnew.ToUpper.Contains("B P D P") Then
-                    '    vnew = StrConv(vnew, VbStrConv.ProperCase)
-                    '    vnew = vnew.Replace("B P D P", "B.P.D.P")
-                    'End If
-                    'If vnew.ToUpper.Contains("S H I E L D") Then
-                    '    vnew = StrConv(vnew, VbStrConv.ProperCase)
-                    '    vnew = vnew.Replace("S H I E L D", "S.H.I.E.L.D")
-                    'End If
                 End If
+
                 If Not old = vnew Then
                     Try
                         'nesta caso somente foi alterado letras maiuscula <-> minúsculas
@@ -1048,6 +1028,7 @@ Public Class Principal
         vnew = vnew.Replace("2000Ad", "2000AD")
         vnew = vnew.Replace("Dmz", "DMZ")
         vnew = vnew.Replace("Ff ", "FF ")
+        vnew = vnew.Replace("%20%", " ")
 
         vnew = vnew.Replace("_ ", " - ")
 
@@ -1080,7 +1061,7 @@ Public Class Principal
 
         Return vnew
     End Function
-    Private Sub Filmes(ByRef vnew As String)
+    Private Sub EspecificosFilmes(ByRef vnew As String)
         If ckbFilmes.Checked Then
 
             vnew = vnew.Replace("(", "[")
