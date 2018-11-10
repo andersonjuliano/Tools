@@ -1086,6 +1086,7 @@ Public Class Principal
             vnew = vnew.Replace("1080P", "[1080p]")
             vnew = vnew.Replace("x264", "[x264]")
             vnew = vnew.Replace("X264", "[x264]")
+
             vnew = vnew.Replace("Bluray", "[Bluray]")
             vnew = vnew.Replace("bluray", "[Bluray]")
             vnew = vnew.Replace("Yify", "[Yify]")
@@ -1100,7 +1101,18 @@ Public Class Principal
             vnew = vnew.Replace("Rarbg", "[Rarbg]")
 
 
+            vnew = vnew.Replace("WWW.BLUDV.TV", "")
+            vnew = vnew.Replace("www.bludv.tv", "")
+            vnew = vnew.Replace("Www.Bludv.Tv", "")
+            vnew = vnew.Replace("Acesse o ORIGINAL", "")
+            vnew = vnew.Replace("Acesse o Original", "")
+            vnew = vnew.Replace("acesse o original", "")
+            vnew = vnew.Replace("ACESSE O ORIGINAL", "")
+
+
+
             vnew = vnew.Replace("#05 #01", "[5.1]")
+
 
 
             vnew = vnew.Replace("3Lt0n", "")
@@ -1154,6 +1166,12 @@ Public Class Principal
             vnew = vnew.Replace("[-", "[")
             vnew = vnew.Replace("-]", "]")
 
+            vnew = vnew.Replace("()", "")
+            vnew = vnew.Replace("( )", "")
+            vnew = vnew.Replace("[]", "")
+            vnew = vnew.Replace("[ ]", "")
+            vnew = vnew.Replace("{}", "")
+            vnew = vnew.Replace("{ }", "")
 
             vnew = vnew.Replace("--", "-")
             vnew = vnew.Replace(".-", ".")
@@ -1532,6 +1550,9 @@ Public Class Principal
                     End If
 
                     ProperCase(vnew)
+
+                    vnew = vnew.Replace("X2E64", "x264")
+
 
                     'If vextensao = ".srt" And vnew.ToUpper.IndexOf(".ENG") = -1 Then
                     '    vnew = vnew.Replace(".por", "").Replace(".Por", "").Replace(".POR", "")
