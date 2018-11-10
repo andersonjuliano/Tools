@@ -1552,6 +1552,7 @@ Public Class Principal
                     ProperCase(vnew)
 
                     vnew = vnew.Replace("X2E64", "x264")
+                    vnew = vnew.Replace("S07E20p", "720p")
 
 
                     'If vextensao = ".srt" And vnew.ToUpper.IndexOf(".ENG") = -1 Then
