@@ -1553,6 +1553,7 @@ Public Class Principal
 
                     vnew = vnew.Replace("X2E64", "x264")
                     vnew = vnew.Replace("S07E20p", "720p")
+                    vnew = vnew.Replace("HS02E64", "H264")
 
 
                     'If vextensao = ".srt" And vnew.ToUpper.IndexOf(".ENG") = -1 Then
