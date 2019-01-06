@@ -1101,12 +1101,16 @@ Public Class Principal
             vnew = vnew.Replace("Rarbg", "[Rarbg]")
 
 
-            vnew = vnew.Replace("WWW.BLUDV.TV", "")
-            vnew = vnew.Replace("www.bludv.tv", "")
-            vnew = vnew.Replace("Www.Bludv.Tv", "")
+            'vnew = vnew.Replace("WWW.BLUDV.TV", "")
+            'vnew = vnew.Replace("www.bludv.tv", "")
+            'vnew = vnew.Replace("Www.Bludv.Tv", "")
+            vnew = vnew.Replace("-Acesse o ORIGINAL", "")
             vnew = vnew.Replace("Acesse o ORIGINAL", "")
+            vnew = vnew.Replace("-Acesse o Original", "")
             vnew = vnew.Replace("Acesse o Original", "")
+            vnew = vnew.Replace("-acesse o original", "")
             vnew = vnew.Replace("acesse o original", "")
+            vnew = vnew.Replace("-ACESSE O ORIGINAL", "")
             vnew = vnew.Replace("ACESSE O ORIGINAL", "")
 
 
@@ -1120,13 +1124,17 @@ Public Class Principal
             vnew = vnew.Replace("[1]", "")
             vnew = vnew.Replace("-- By - Lucas Firmo", "")
             vnew = vnew.Replace("- By - Lucas Firmo", "")
+            vnew = vnew.Replace("-WWW.BLUDV.COM", "")
             vnew = vnew.Replace("WWW.BLUDV.COM", "")
             vnew = vnew.Replace("-Www Bludv Com", "")
             vnew = vnew.Replace("Www Bludv Com", "")
             vnew = vnew.Replace("-Www.Bludv.Com", "")
             vnew = vnew.Replace("Www.Bludv.Com", "")
             vnew = vnew.Replace("Www.Bludv.com", "")
-
+            vnew = vnew.Replace("-Www.Comandotorrents.Com", "")
+            vnew = vnew.Replace("Www.Comandotorrents.Com", "")
+            vnew = vnew.Replace("-Www.Lapumiafilmes.Com", "")
+            vnew = vnew.Replace("Www.Lapumiafilmes.Com", "")
 
 
             vnew = vnew.Replace(").(", ")(")
