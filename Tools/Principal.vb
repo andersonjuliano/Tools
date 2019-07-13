@@ -6,10 +6,13 @@ Imports System.Threading
 Imports Microsoft.Win32
 Imports System.Drawing.Imaging
 'Imports System.Windows.Media.Imaging
-Imports System.data
+Imports System.Data
 
 
-
+''' <summary>
+''' Tools para remonear arquivo
+''' 13/07/2019 - estava marcando o indicador de SCAN ao iniciar a rotina de renomeia séries
+''' </summary>
 Public Class Principal
 
     Private Sub Principal_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -1489,7 +1492,7 @@ Public Class Principal
     Private Sub btnCorrigeSerie_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCorrigeSerie.Click
 
         ckbPreprosicao.Checked = True
-        ckbScan.Checked = True
+        'ckbScan.Checked = True
 
         tr = New Thread(AddressOf RenomeiaEpisodios)
         tr.IsBackground = True
@@ -1906,10 +1909,10 @@ Public Class Principal
                 vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
             Next
 
-            If ckbScan.AutoCheck Then
+            If ckbScan.Checked Then
                 vnew = EspecificoScan(vnew)
-
             End If
+
             If Not old = vnew Then
                 Try
                     'nesta caso somente foi alterado letras maiuscula <-> minúsculas
