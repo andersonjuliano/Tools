@@ -6,10 +6,13 @@ Imports System.Threading
 Imports Microsoft.Win32
 Imports System.Drawing.Imaging
 'Imports System.Windows.Media.Imaging
-Imports System.data
+Imports System.Data
 
 
-
+''' <summary>
+''' Tools para remonear arquivo
+''' 13/07/2019 - estava marcando o indicador de SCAN ao iniciar a rotina de renomeia séries
+''' </summary>
 Public Class Principal
 
     Private Sub Principal_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -1086,6 +1089,7 @@ Public Class Principal
             vnew = vnew.Replace("1080P", "[1080p]")
             vnew = vnew.Replace("x264", "[x264]")
             vnew = vnew.Replace("X264", "[x264]")
+
             vnew = vnew.Replace("Bluray", "[Bluray]")
             vnew = vnew.Replace("bluray", "[Bluray]")
             vnew = vnew.Replace("Yify", "[Yify]")
@@ -1100,7 +1104,22 @@ Public Class Principal
             vnew = vnew.Replace("Rarbg", "[Rarbg]")
 
 
+            'vnew = vnew.Replace("WWW.BLUDV.TV", "")
+            'vnew = vnew.Replace("www.bludv.tv", "")
+            'vnew = vnew.Replace("Www.Bludv.Tv", "")
+            vnew = vnew.Replace("-Acesse o ORIGINAL", "")
+            vnew = vnew.Replace("Acesse o ORIGINAL", "")
+            vnew = vnew.Replace("-Acesse o Original", "")
+            vnew = vnew.Replace("Acesse o Original", "")
+            vnew = vnew.Replace("-acesse o original", "")
+            vnew = vnew.Replace("acesse o original", "")
+            vnew = vnew.Replace("-ACESSE O ORIGINAL", "")
+            vnew = vnew.Replace("ACESSE O ORIGINAL", "")
+
+
+
             vnew = vnew.Replace("#05 #01", "[5.1]")
+
 
 
             vnew = vnew.Replace("3Lt0n", "")
@@ -1108,13 +1127,17 @@ Public Class Principal
             vnew = vnew.Replace("[1]", "")
             vnew = vnew.Replace("-- By - Lucas Firmo", "")
             vnew = vnew.Replace("- By - Lucas Firmo", "")
+            vnew = vnew.Replace("-WWW.BLUDV.COM", "")
             vnew = vnew.Replace("WWW.BLUDV.COM", "")
             vnew = vnew.Replace("-Www Bludv Com", "")
             vnew = vnew.Replace("Www Bludv Com", "")
             vnew = vnew.Replace("-Www.Bludv.Com", "")
             vnew = vnew.Replace("Www.Bludv.Com", "")
             vnew = vnew.Replace("Www.Bludv.com", "")
-
+            vnew = vnew.Replace("-Www.Comandotorrents.Com", "")
+            vnew = vnew.Replace("Www.Comandotorrents.Com", "")
+            vnew = vnew.Replace("-Www.Lapumiafilmes.Com", "")
+            vnew = vnew.Replace("Www.Lapumiafilmes.Com", "")
 
 
             vnew = vnew.Replace(").(", ")(")
@@ -1154,6 +1177,12 @@ Public Class Principal
             vnew = vnew.Replace("[-", "[")
             vnew = vnew.Replace("-]", "]")
 
+            vnew = vnew.Replace("()", "")
+            vnew = vnew.Replace("( )", "")
+            vnew = vnew.Replace("[]", "")
+            vnew = vnew.Replace("[ ]", "")
+            vnew = vnew.Replace("{}", "")
+            vnew = vnew.Replace("{ }", "")
 
             vnew = vnew.Replace("--", "-")
             vnew = vnew.Replace(".-", ".")
@@ -1463,7 +1492,7 @@ Public Class Principal
     Private Sub btnCorrigeSerie_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCorrigeSerie.Click
 
         ckbPreprosicao.Checked = True
-        ckbScan.Checked = True
+        'ckbScan.Checked = True
 
         tr = New Thread(AddressOf RenomeiaEpisodios)
         tr.IsBackground = True
@@ -1532,6 +1561,11 @@ Public Class Principal
                     End If
 
                     ProperCase(vnew)
+
+                    vnew = vnew.Replace("X2E64", "x264")
+                    vnew = vnew.Replace("S07E20p", "720p")
+                    vnew = vnew.Replace("HS02E64", "H264")
+
 
                     'If vextensao = ".srt" And vnew.ToUpper.IndexOf(".ENG") = -1 Then
                     '    vnew = vnew.Replace(".por", "").Replace(".Por", "").Replace(".POR", "")
@@ -1875,10 +1909,10 @@ Public Class Principal
                 vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
             Next
 
-            If ckbScan.AutoCheck Then
+            If ckbScan.Checked Then
                 vnew = EspecificoScan(vnew)
-
             End If
+
             If Not old = vnew Then
                 Try
                     'nesta caso somente foi alterado letras maiuscula <-> minúsculas
