@@ -1065,132 +1065,156 @@ Public Class Principal
         Return vnew
     End Function
     Private Sub EspecificosFilmes(ByRef vnew As String)
-        If ckbFilmes.Checked Then
+        '        If ckbFilmes.Checked Then
 
-            vnew = vnew.Replace("(", "[")
-            vnew = vnew.Replace(")", "]")
+        vnew = vnew.Replace("(", "[")
+        vnew = vnew.Replace(")", "]")
 
-            For index = 1920 To 2030
-                vnew = vnew.Replace(" " & index & " ", " (" & index & ") ")
-                vnew = vnew.Replace("[" & index & "]", " (" & index & ") ")
-                vnew = vnew.Replace("." & index & ".", " (" & index & ") ")
-                vnew = vnew.Replace("_" & index & "_", " (" & index & ") ")
-            Next
+        For index = 1920 To 2030
+            vnew = vnew.Replace(" " & index & " ", " (" & index & ") ")
+            vnew = vnew.Replace("[" & index & "]", " (" & index & ") ")
+            vnew = vnew.Replace("." & index & ".", " (" & index & ") ")
+            vnew = vnew.Replace("_" & index & "_", " (" & index & ") ")
+        Next
 
-            vnew = vnew.Replace("Dual Audio", "[Dual Audio]")
-            vnew = vnew.Replace(" Dual", " [Dual]")
-            vnew = vnew.Replace(".Dual", " [Dual]")
-            vnew = vnew.Replace("_Dual_", " [Dual]")
-            vnew = vnew.Replace("-Dual", " [Dual]")
-            vnew = vnew.Replace("Dublado", "[Dublado]")
-            vnew = vnew.Replace("720p", "[720p]")
-            vnew = vnew.Replace("720P", "[720p]")
-            vnew = vnew.Replace("1080p", "[1080p]")
-            vnew = vnew.Replace("1080P", "[1080p]")
-            vnew = vnew.Replace("x264", "[x264]")
-            vnew = vnew.Replace("X264", "[x264]")
+        vnew = vnew.Replace("Dual Áudio", "[Dual Áudio]")
+        vnew = vnew.Replace("Dual Audio", "[Dual Audio]")
+        vnew = vnew.Replace("Web-Dl", "[Web-Dl]")
+        vnew = vnew.Replace(" Dual", " [Dual]")
+        vnew = vnew.Replace(".Dual", " [Dual]")
+        vnew = vnew.Replace("_Dual_", " [Dual]")
+        vnew = vnew.Replace("-Dual", " [Dual]")
+        vnew = vnew.Replace("Dublado", "[Dublado]")
+        vnew = vnew.Replace("720p", "[720p]")
+        vnew = vnew.Replace("720P", "[720p]")
+        vnew = vnew.Replace("1080p", "[1080p]")
+        vnew = vnew.Replace("1080P", "[1080p]")
+        vnew = vnew.Replace("x264", "[x264]")
+        vnew = vnew.Replace("X264", "[x264]")
 
-            vnew = vnew.Replace("Bluray", "[Bluray]")
-            vnew = vnew.Replace("bluray", "[Bluray]")
-            vnew = vnew.Replace("Yify", "[Yify]")
-            vnew = vnew.Replace("yify", "[Yify]")
-            vnew = vnew.Replace("YIFY", "[Yify]")
-            vnew = vnew.Replace("5.1", "[5.1]")
-            vnew = vnew.Replace("5 1", "[5.1]")
-            vnew = vnew.Replace("6Ch", "[6Ch]")
-            vnew = vnew.Replace("6ch", "[6Ch]")
-            vnew = vnew.Replace("H264", "[H264]")
-            vnew = vnew.Replace("Aac", "[Aac]")
-            vnew = vnew.Replace("Rarbg", "[Rarbg]")
-
-
-            'vnew = vnew.Replace("WWW.BLUDV.TV", "")
-            'vnew = vnew.Replace("www.bludv.tv", "")
-            'vnew = vnew.Replace("Www.Bludv.Tv", "")
-            vnew = vnew.Replace("-Acesse o ORIGINAL", "")
-            vnew = vnew.Replace("Acesse o ORIGINAL", "")
-            vnew = vnew.Replace("-Acesse o Original", "")
-            vnew = vnew.Replace("Acesse o Original", "")
-            vnew = vnew.Replace("-acesse o original", "")
-            vnew = vnew.Replace("acesse o original", "")
-            vnew = vnew.Replace("-ACESSE O ORIGINAL", "")
-            vnew = vnew.Replace("ACESSE O ORIGINAL", "")
+        vnew = vnew.Replace("Bluray", "[Bluray]")
+        vnew = vnew.Replace("bluray", "[Bluray]")
+        vnew = vnew.Replace("Yify", "[Yify]")
+        vnew = vnew.Replace("yify", "[Yify]")
+        vnew = vnew.Replace("YIFY", "[Yify]")
+        vnew = vnew.Replace("5.1", "[5.1]")
+        vnew = vnew.Replace("5 1", "[5.1]")
+        vnew = vnew.Replace("6Ch", "[6Ch]")
+        vnew = vnew.Replace("6ch", "[6Ch]")
+        vnew = vnew.Replace("H264", "[H264]")
+        vnew = vnew.Replace("Aac", "[Aac]")
+        vnew = vnew.Replace("Rarbg", "[Rarbg]")
 
 
-
-            vnew = vnew.Replace("#05 #01", "[5.1]")
+        'vnew = vnew.Replace("WWW.BLUDV.TV", "")
+        'vnew = vnew.Replace("www.bludv.tv", "")
+        'vnew = vnew.Replace("Www.Bludv.Tv", "")
+        vnew = vnew.Replace("-Acesse o ORIGINAL", "")
+        vnew = vnew.Replace("Acesse o ORIGINAL", "")
+        vnew = vnew.Replace("-Acesse o Original", "")
+        vnew = vnew.Replace("Acesse o Original", "")
+        vnew = vnew.Replace("-acesse o original", "")
+        vnew = vnew.Replace("acesse o original", "")
+        vnew = vnew.Replace("-ACESSE O ORIGINAL", "")
+        vnew = vnew.Replace("ACESSE O ORIGINAL", "")
 
 
 
-            vnew = vnew.Replace("3Lt0n", "")
-            vnew = vnew.Replace("(1)", "")
-            vnew = vnew.Replace("[1]", "")
-            vnew = vnew.Replace("-- By - Lucas Firmo", "")
-            vnew = vnew.Replace("- By - Lucas Firmo", "")
-            vnew = vnew.Replace("-WWW.BLUDV.COM", "")
-            vnew = vnew.Replace("WWW.BLUDV.COM", "")
-            vnew = vnew.Replace("-Www Bludv Com", "")
-            vnew = vnew.Replace("Www Bludv Com", "")
-            vnew = vnew.Replace("-Www.Bludv.Com", "")
-            vnew = vnew.Replace("Www.Bludv.Com", "")
-            vnew = vnew.Replace("Www.Bludv.com", "")
-            vnew = vnew.Replace("-Www.Comandotorrents.Com", "")
-            vnew = vnew.Replace("Www.Comandotorrents.Com", "")
-            vnew = vnew.Replace("-Www.Lapumiafilmes.Com", "")
-            vnew = vnew.Replace("Www.Lapumiafilmes.Com", "")
+        vnew = vnew.Replace("#05 #01", "[5.1]")
 
 
-            vnew = vnew.Replace(").(", ")(")
-            vnew = vnew.Replace("),(", ")(")
-            vnew = vnew.Replace(")-(", ")(")
-            vnew = vnew.Replace("],[", "][")
-            vnew = vnew.Replace("].[", "][")
-            vnew = vnew.Replace("]-[", "][")
-            vnew = vnew.Replace("  ", " ")
-            vnew = vnew.Replace("  ", " ")
+
+        vnew = vnew.Replace("3Lt0n", "")
+        vnew = vnew.Replace("(1)", "")
+        vnew = vnew.Replace("[1]", "")
+        vnew = vnew.Replace("-- By - Lucas Firmo", "")
+        vnew = vnew.Replace("- By - Lucas Firmo", "")
+        vnew = vnew.Replace("-WWW.BLUDV.COM", "")
+        vnew = vnew.Replace("WWW.BLUDV.COM", "")
+        vnew = vnew.Replace("-Www Bludv Com", "")
+        vnew = vnew.Replace("Www Bludv Com", "")
+        vnew = vnew.Replace("-Www.Bludv.Com", "")
+        vnew = vnew.Replace("Www.Bludv.Com", "")
+        vnew = vnew.Replace("Www.Bludv.com", "")
+        vnew = vnew.Replace("-Www.Comandotorrents.Com", "")
+        vnew = vnew.Replace("Www.Comandotorrents.Com", "")
+        vnew = vnew.Replace("-Www.Lapumiafilmes.Com", "")
+        vnew = vnew.Replace("Www.Lapumiafilmes.Com", "")
+
+        vnew = vnew.Replace("Www.Torrentdosfilmes.Com", "")
+        vnew = vnew.Replace("Ww.Torrentdosfilmes.Com", "")
+
+        vnew = vnew.Replace("Www.Bludv.Tv", "")
+        vnew = vnew.Replace("www.bludv.tv", "")
+        vnew = vnew.Replace("WWW.BLUDV.TV", "")
+
+        vnew = vnew.Replace("Ww.Bludv.Tv", "")
+        vnew = vnew.Replace("ww.bludv.tv", "")
+        vnew = vnew.Replace("WW.BLUDV.TV", "")
 
 
-            vnew = vnew.Replace(") [", ")[")
-            vnew = vnew.Replace("] (", "](")
+
+        vnew = vnew.Replace(").(", ")(")
+        vnew = vnew.Replace("),(", ")(")
+        vnew = vnew.Replace(")-(", ")(")
+        vnew = vnew.Replace("],[", "][")
+        vnew = vnew.Replace("].[", "][")
+        vnew = vnew.Replace("]-[", "][")
+        vnew = vnew.Replace("  ", " ")
+        vnew = vnew.Replace("  ", " ")
 
 
-            vnew = vnew.Replace("( ", "(")
-            vnew = vnew.Replace(" )", ")")
-            vnew = vnew.Replace(") (", ")(")
+        vnew = vnew.Replace(") [", ")[")
+        vnew = vnew.Replace("] (", "](")
 
 
-            vnew = vnew.Replace("((", "(")
-            vnew = vnew.Replace("))", ")")
+        vnew = vnew.Replace("( ", "(")
+        vnew = vnew.Replace(" )", ")")
+        vnew = vnew.Replace(") (", ")(")
 
 
-            vnew = vnew.Replace("[ ", "[")
-            vnew = vnew.Replace(" ]", "]")
-            vnew = vnew.Replace("] [", "][")
+        vnew = vnew.Replace("((", "(")
+        vnew = vnew.Replace("))", ")")
 
 
-            vnew = vnew.Replace("[[", "[")
-            vnew = vnew.Replace("]]", "]")
+        vnew = vnew.Replace("[ ", "[")
+        vnew = vnew.Replace(" ]", "]")
+        vnew = vnew.Replace("] [", "][")
 
 
-            vnew = vnew.Replace("(-", "(")
-            vnew = vnew.Replace("-)", ")")
-            vnew = vnew.Replace("[-", "[")
-            vnew = vnew.Replace("-]", "]")
-
-            vnew = vnew.Replace("()", "")
-            vnew = vnew.Replace("( )", "")
-            vnew = vnew.Replace("[]", "")
-            vnew = vnew.Replace("[ ]", "")
-            vnew = vnew.Replace("{}", "")
-            vnew = vnew.Replace("{ }", "")
-
-            vnew = vnew.Replace("--", "-")
-            vnew = vnew.Replace(".-", ".")
-            vnew = vnew.Replace(". -", ". ")
-            vnew = vnew.Replace("-.", ".")
+        vnew = vnew.Replace("[[", "[")
+        vnew = vnew.Replace("]]", "]")
 
 
+        vnew = vnew.Replace("(-", "(")
+        vnew = vnew.Replace("-)", ")")
+        vnew = vnew.Replace("[-", "[")
+        vnew = vnew.Replace("-]", "]")
+
+        vnew = vnew.Replace("()", "")
+        vnew = vnew.Replace("( )", "")
+        vnew = vnew.Replace("[]", "")
+        vnew = vnew.Replace("[ ]", "")
+        vnew = vnew.Replace("{}", "")
+        vnew = vnew.Replace("{ }", "")
+
+        vnew = vnew.Replace("--", "-")
+        vnew = vnew.Replace(".-", ".")
+        vnew = vnew.Replace(". -", ". ")
+        vnew = vnew.Replace("-.", ".")
+        vnew = vnew.Replace("- .", ".")
+
+        vnew = vnew.Trim
+
+        If vnew.Substring(vnew.Length - 1, 1) = "-" Or
+           vnew.Substring(vnew.Length - 1, 1) = "." Or
+           vnew.Substring(vnew.Length - 1, 1) = "(" Or
+           vnew.Substring(vnew.Length - 1, 1) = "[" Then
+            vnew = vnew.Remove(vnew.Length - 1, 1)
         End If
+
+
+        'End If
     End Sub
 
     Private Sub btnListaArquivos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnListaArquivos.Click
@@ -1565,6 +1589,9 @@ Public Class Principal
                     vnew = vnew.Replace("X2E64", "x264")
                     vnew = vnew.Replace("S07E20p", "720p")
                     vnew = vnew.Replace("HS02E64", "H264")
+
+
+                    EspecificosFilmes(vnew)
 
 
                     'If vextensao = ".srt" And vnew.ToUpper.IndexOf(".ENG") = -1 Then
@@ -1972,6 +1999,12 @@ Public Class Principal
         Next
         Add("Processo concluido")
 
+    End Sub
+
+    Private Sub ckbFilmes_CheckedChanged(sender As Object, e As EventArgs) Handles ckbFilmes.CheckedChanged
+        If ckbFilmes.Checked Then
+            ckbScan.Checked = False
+        End If
     End Sub
 
 End Class
