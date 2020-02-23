@@ -47,6 +47,12 @@ Public Class Principal
             .SetToolTip(btnCorrigeRoms, "Irá deletar as roms repetidas do set No-Intro, também as de lingua muito diferente")
         End With
 
+        Dim r1() As String = {"2019"}
+        Dim r2() As String = {"2020"}
+        dgIgnorar.Rows.Add(r1)
+        dgIgnorar.Rows.Add(r2)
+
+
 
 
 
@@ -79,6 +85,7 @@ Public Class Principal
         Add("27/04/2017 - Correções de bugs ao mudar somente para letras minúsculas <-> maiúsculas")
         Add("02/05/2017 - Correções de bugs ao renomear arquivos com numeral romano (I, II, III)")
         Add("13/04/2018 - Separado os log de erro")
+        Add("23/02/2020 - Separado os Datagridview, implementei o novo recurso 'Ignorar' ao renomear as séries")
 
 
     End Sub
@@ -412,11 +419,11 @@ Public Class Principal
         For Each pasta As String In Directory.GetDirectories(CurDir)
             Try
                 Dim cbr As String = pasta
-                For Each dr As DataGridViewRow In dg.Rows
+                For Each dr As DataGridViewRow In dgSubstituir.Rows
                     cbr = cbr.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
                 Next
                 ProperCase(cbr)
-                For Each dr As DataGridViewRow In dg.Rows
+                For Each dr As DataGridViewRow In dgSubstituir.Rows
                     cbr = cbr.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
                 Next
                 Add("Criando arquivo cbr da pasta: " & pasta.Substring(pasta.LastIndexOf("\") + 1, pasta.Length - pasta.LastIndexOf("\") - 1))
@@ -600,7 +607,7 @@ Public Class Principal
                 If VerificaArquivo(old) Then
 
                     Add("Renomeando arquivo: " & vnew)
-                    For Each dr As DataGridViewRow In dg.Rows
+                    For Each dr As DataGridViewRow In dgSubstituir.Rows
                         vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
                     Next
                     ProperCase(vnew)
@@ -867,31 +874,36 @@ Public Class Principal
 
 
                         'respeita o de -> para
-                        For Each dr As DataGridViewRow In dg.Rows
+                        For Each dr As DataGridViewRow In dgSubstituir.Rows
                             If Not dr.Cells("de").Value Is Nothing Then
                                 vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
-                            ElseIf Not dr.Cells("incluir").Value Is Nothing Then
+                            End If
+                        Next
+
+                        For Each dr As DataGridViewRow In dgIncluir.Rows
+                            If Not dr.Cells("incluir").Value Is Nothing Then
                                 vnew = dr.Cells("incluir").Value.ToString & " " & vnew
                             End If
                         Next
 
+
                         If vextensao = ".txt" Then
-                            If vnew.IndexOf("Edit") > -1 Then
-                                vnew = "#Sinopse" '& vnew.TrimStart
+                                If vnew.IndexOf("Edit") > -1 Then
+                                    vnew = "#Sinopse" '& vnew.TrimStart
+                                End If
                             End If
+
+
+                            'algumas HQs que devem ser corrigidas manualmente
+                            vnew = EspecificoScan(vnew)
+
                         End If
 
+                        'For Each dr As DataGridViewRow In dg.Rows
+                        '    vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
+                        'Next
 
-                        'algumas HQs que devem ser corrigidas manualmente
-                        vnew = EspecificoScan(vnew)
-
-                    End If
-
-                    'For Each dr As DataGridViewRow In dg.Rows
-                    '    vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
-                    'Next
-
-                    If ckbFilmes.Checked Then
+                        If ckbFilmes.Checked Then
                         'procedimento especiais para filmes
                         EspecificosFilmes(vnew)
                     End If
@@ -965,12 +977,12 @@ Public Class Principal
 
 
 
-                For Each dr As DataGridViewRow In dg.Rows
+                For Each dr As DataGridViewRow In dgSubstituir.Rows
                     vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
                 Next
                 ProperCase(vnew)
 
-                For Each dr As DataGridViewRow In dg.Rows
+                For Each dr As DataGridViewRow In dgSubstituir.Rows
                     vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
                 Next
 
@@ -1561,49 +1573,58 @@ Public Class Principal
                         charAnt = c
                     Next
 
+                    Dim vOk As Boolean = True
+                    For Each dr As DataGridViewRow In dgIgnorar.Rows
+                        If EpisodioOld = dr.Cells("ignorar").Value Then
+                            vOk = False
+                        End If
+                    Next
 
-                    Select Case EpisodioOld.Length
+
+                    If vOk Then
+
+                        Select Case EpisodioOld.Length
                         'Case 0, 1, 2
                         '    Continue For
-                        Case 3
-                            EpisodioNew = "S0" & EpisodioOld.Substring(0, 1) & "E" & EpisodioOld.Substring(1, 2)
-                        Case 4
-                            EpisodioNew = "S" & EpisodioOld.Substring(0, 2) & "E" & EpisodioOld.Substring(2, 2)
-                        Case 5
-                            EpisodioNew = "S0" & EpisodioOld.Substring(0, 1) & "E" & EpisodioOld.Substring(1, 4)
-                        Case 6
-                            EpisodioNew = "S" & EpisodioOld.Substring(0, 2) & "E" & EpisodioOld.Substring(2, 4)
-                    End Select
-
+                            Case 3
+                                EpisodioNew = "S0" & EpisodioOld.Substring(0, 1) & "E" & EpisodioOld.Substring(1, 2)
+                            Case 4
+                                EpisodioNew = "S" & EpisodioOld.Substring(0, 2) & "E" & EpisodioOld.Substring(2, 2)
+                            Case 5
+                                EpisodioNew = "S0" & EpisodioOld.Substring(0, 1) & "E" & EpisodioOld.Substring(1, 4)
+                            Case 6
+                                EpisodioNew = "S" & EpisodioOld.Substring(0, 2) & "E" & EpisodioOld.Substring(2, 4)
+                        End Select
+                    End If
 
 
                     vextensao = vnew.Substring(vnew.LastIndexOf("."), vnew.Length - vnew.LastIndexOf("."))
-                    If EpisodioOld.Length > 2 Then
-                        vnew = vnew.Substring(0, vnew.LastIndexOf(".")).Replace(EpisodioOld, EpisodioNew)
-                    Else
-                        vnew = vnew.Substring(0, vnew.LastIndexOf("."))
-                    End If
+                           If EpisodioOld.Length > 2 Then
+                               vnew = vnew.Substring(0, vnew.LastIndexOf(".")).Replace(EpisodioOld, EpisodioNew)
+                           Else
+                               vnew = vnew.Substring(0, vnew.LastIndexOf("."))
+                           End If
 
-                    ProperCase(vnew)
+                           ProperCase(vnew)
 
-                    vnew = vnew.Replace("X2E64", "x264")
-                    vnew = vnew.Replace("S07E20p", "720p")
-                    vnew = vnew.Replace("HS02E64", "H264")
-
-
-                    EspecificosFilmes(vnew)
+                           vnew = vnew.Replace("X2E64", "x264")
+                           vnew = vnew.Replace("S07E20p", "720p")
+                           vnew = vnew.Replace("HS02E64", "H264")
 
 
-                    'If vextensao = ".srt" And vnew.ToUpper.IndexOf(".ENG") = -1 Then
-                    '    vnew = vnew.Replace(".por", "").Replace(".Por", "").Replace(".POR", "")
-                    '    vextensao = ".por.srt"
-                    'End If
+                           EspecificosFilmes(vnew)
 
-                    'somente renomeia se o novo nome for diferente do anterior
-                    If Not arq.Trim = Trim(vnew & vextensao) Then
-                        My.Computer.FileSystem.RenameFile(arq, Trim(vnew & vextensao))
-                        ArquivosRenomeados += 1
-                    End If
+
+                           'If vextensao = ".srt" And vnew.ToUpper.IndexOf(".ENG") = -1 Then
+                           '    vnew = vnew.Replace(".por", "").Replace(".Por", "").Replace(".POR", "")
+                           '    vextensao = ".por.srt"
+                           'End If
+
+                           'somente renomeia se o novo nome for diferente do anterior
+                           If Not arq.Trim = Trim(vnew & vextensao) Then
+                               My.Computer.FileSystem.RenameFile(arq, Trim(vnew & vextensao))
+                               ArquivosRenomeados += 1
+                           End If
 
                 End If
 
@@ -1927,12 +1948,12 @@ Public Class Principal
                 vnew = vnew.Substring(vnew.IndexOf(")") + 1, vnew.Length - vnew.IndexOf(")") - 1).Trim & " " & vnew.Substring(0, vnew.IndexOf(")") + 1)
             End If
 
-            For Each dr As DataGridViewRow In dg.Rows
+            For Each dr As DataGridViewRow In dgSubstituir.Rows
                 vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
             Next
             ProperCase(vnew)
 
-            For Each dr As DataGridViewRow In dg.Rows
+            For Each dr As DataGridViewRow In dgSubstituir.Rows
                 vnew = vnew.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
             Next
 

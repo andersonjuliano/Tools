@@ -53,23 +53,28 @@ Partial Class Principal
         Me.pnlLog = New System.Windows.Forms.Panel()
         Me.logErro = New System.Windows.Forms.ListBox()
         Me.pnlDataGrid = New System.Windows.Forms.Panel()
-        Me.dg = New System.Windows.Forms.DataGridView()
-        Me.de = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.para = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.incluir = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgSubstituir = New System.Windows.Forms.DataGridView()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.mensagem = New System.Windows.Forms.ToolStripStatusLabel()
         Me.pBar = New System.Windows.Forms.ToolStripProgressBar()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.dgIncluir = New System.Windows.Forms.DataGridView()
+        Me.de = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.para = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgIgnorar = New System.Windows.Forms.DataGridView()
+        Me.incluir = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ignorar = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pnlbuttons.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.pnlCheckBox.SuspendLayout()
         Me.pnlLog.SuspendLayout()
         Me.pnlDataGrid.SuspendLayout()
-        CType(Me.dg, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgSubstituir, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
+        CType(Me.dgIncluir, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgIgnorar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnCriaCbr
@@ -377,40 +382,24 @@ Partial Class Principal
         '
         'pnlDataGrid
         '
-        Me.pnlDataGrid.Controls.Add(Me.dg)
+        Me.pnlDataGrid.Controls.Add(Me.dgSubstituir)
+        Me.pnlDataGrid.Controls.Add(Me.dgIncluir)
+        Me.pnlDataGrid.Controls.Add(Me.dgIgnorar)
         Me.pnlDataGrid.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlDataGrid.Location = New System.Drawing.Point(0, 89)
         Me.pnlDataGrid.Name = "pnlDataGrid"
         Me.pnlDataGrid.Size = New System.Drawing.Size(1069, 122)
         Me.pnlDataGrid.TabIndex = 6
         '
-        'dg
+        'dgSubstituir
         '
-        Me.dg.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dg.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.de, Me.para, Me.incluir})
-        Me.dg.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dg.Location = New System.Drawing.Point(0, 0)
-        Me.dg.Name = "dg"
-        Me.dg.Size = New System.Drawing.Size(1069, 122)
-        Me.dg.TabIndex = 0
-        '
-        'de
-        '
-        Me.de.HeaderText = "De"
-        Me.de.Name = "de"
-        Me.de.Width = 280
-        '
-        'para
-        '
-        Me.para.HeaderText = "Para"
-        Me.para.Name = "para"
-        Me.para.Width = 280
-        '
-        'incluir
-        '
-        Me.incluir.HeaderText = "Incluir"
-        Me.incluir.Name = "incluir"
-        Me.incluir.Width = 280
+        Me.dgSubstituir.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgSubstituir.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.de, Me.para})
+        Me.dgSubstituir.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgSubstituir.Location = New System.Drawing.Point(0, 0)
+        Me.dgSubstituir.Name = "dgSubstituir"
+        Me.dgSubstituir.Size = New System.Drawing.Size(547, 122)
+        Me.dgSubstituir.TabIndex = 0
         '
         'OpenFileDialog1
         '
@@ -441,6 +430,49 @@ Partial Class Principal
         Me.pBar.Step = 1
         Me.pBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous
         '
+        'dgIncluir
+        '
+        Me.dgIncluir.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgIncluir.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.incluir})
+        Me.dgIncluir.Dock = System.Windows.Forms.DockStyle.Right
+        Me.dgIncluir.Location = New System.Drawing.Point(547, 0)
+        Me.dgIncluir.Name = "dgIncluir"
+        Me.dgIncluir.Size = New System.Drawing.Size(362, 122)
+        Me.dgIncluir.TabIndex = 1
+        '
+        'de
+        '
+        Me.de.HeaderText = "De"
+        Me.de.Name = "de"
+        Me.de.Width = 200
+        '
+        'para
+        '
+        Me.para.HeaderText = "Para"
+        Me.para.Name = "para"
+        Me.para.Width = 200
+        '
+        'dgIgnorar
+        '
+        Me.dgIgnorar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgIgnorar.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ignorar})
+        Me.dgIgnorar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.dgIgnorar.Location = New System.Drawing.Point(909, 0)
+        Me.dgIgnorar.Name = "dgIgnorar"
+        Me.dgIgnorar.Size = New System.Drawing.Size(160, 122)
+        Me.dgIgnorar.TabIndex = 2
+        '
+        'incluir
+        '
+        Me.incluir.HeaderText = "Incluir"
+        Me.incluir.Name = "incluir"
+        Me.incluir.Width = 300
+        '
+        'ignorar
+        '
+        Me.ignorar.HeaderText = "Ignorar"
+        Me.ignorar.Name = "ignorar"
+        '
         'Principal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -461,9 +493,11 @@ Partial Class Principal
         Me.pnlCheckBox.PerformLayout()
         Me.pnlLog.ResumeLayout(False)
         Me.pnlDataGrid.ResumeLayout(False)
-        CType(Me.dg, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgSubstituir, System.ComponentModel.ISupportInitialize).EndInit()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
+        CType(Me.dgIncluir, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgIgnorar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -476,7 +510,7 @@ Partial Class Principal
     Friend WithEvents btnRenomeia As System.Windows.Forms.Button
     Friend WithEvents pnlLog As System.Windows.Forms.Panel
     Friend WithEvents pnlDataGrid As System.Windows.Forms.Panel
-    Friend WithEvents dg As System.Windows.Forms.DataGridView
+    Friend WithEvents dgSubstituir As System.Windows.Forms.DataGridView
     Friend WithEvents btnListaArquivos As System.Windows.Forms.Button
     Friend WithEvents ckbProperCase As System.Windows.Forms.CheckBox
     Friend WithEvents ckbPreprosicao As System.Windows.Forms.CheckBox
@@ -501,10 +535,13 @@ Partial Class Principal
     Friend WithEvents ckbNumerados As CheckBox
     Friend WithEvents ckbFilmes As CheckBox
     Friend WithEvents logErro As ListBox
-    Friend WithEvents de As DataGridViewTextBoxColumn
-    Friend WithEvents para As DataGridViewTextBoxColumn
-    Friend WithEvents incluir As DataGridViewTextBoxColumn
     Friend WithEvents cbkMudaExt As CheckBox
     Friend WithEvents btnPasta As Button
     Friend WithEvents btnCriarPastas As Button
+    Friend WithEvents dgIncluir As DataGridView
+    Friend WithEvents dgIgnorar As DataGridView
+    Friend WithEvents de As DataGridViewTextBoxColumn
+    Friend WithEvents para As DataGridViewTextBoxColumn
+    Friend WithEvents incluir As DataGridViewTextBoxColumn
+    Friend WithEvents ignorar As DataGridViewTextBoxColumn
 End Class
