@@ -1085,8 +1085,8 @@ Public Class Principal
         For index = 1920 To 2030
             vnew = vnew.Replace(" " & index & " ", " (" & index & ") ")
             vnew = vnew.Replace("[" & index & "]", " (" & index & ") ")
-            vnew = vnew.Replace("." & index & ".", " (" & index & ") ")
-            vnew = vnew.Replace("_" & index & "_", " (" & index & ") ")
+            vnew = vnew.Replace("." & index & ".", ".(" & index & ").")
+            vnew = vnew.Replace("_" & index & "_", "_(" & index & ")_")
         Next
 
         vnew = vnew.Replace("Dual Áudio", "[Dual Áudio]")
@@ -1582,7 +1582,6 @@ Public Class Principal
 
 
                     If vOk Then
-
                         Select Case EpisodioOld.Length
                         'Case 0, 1, 2
                         '    Continue For
@@ -1595,6 +1594,8 @@ Public Class Principal
                             Case 6
                                 EpisodioNew = "S" & EpisodioOld.Substring(0, 2) & "E" & EpisodioOld.Substring(2, 4)
                         End Select
+                    Else
+                        EpisodioNew = EpisodioOld
                     End If
 
 
