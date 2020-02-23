@@ -380,7 +380,7 @@ Public Class Principal
     End Sub
     Private Function VerificaArquivo(ByVal varq As String) As Boolean
         Select Case varq.ToUpper
-            Case "IONIC.ZIP.DLL", "TOOLS.EXE", "TOOLS.PDB", "TOOLS.VSHOST.EXE", "TOOLS.VSHOST.EXE.MANIFEST", "TOOLS.XML", "TOOLS.EXE.CONFIG", "TOOLS.VSHOST.EXE.CONFIG"
+            Case "IONIC.ZIP.DLL", "TOOLS.EXE", "TOOLS.PDB", "TOOLS.VSHOST.EXE", "TOOLS.VSHOST.EXE.MANIFEST", "TOOLS.XML", "TOOLS.EXE.CONFIG", "TOOLS.VSHOST.EXE.CONFIG", "DESKTOP.INI"
                 Return False
             Case Else
                 Return True
@@ -1599,32 +1599,32 @@ Public Class Principal
 
 
                     vextensao = vnew.Substring(vnew.LastIndexOf("."), vnew.Length - vnew.LastIndexOf("."))
-                           If EpisodioOld.Length > 2 Then
-                               vnew = vnew.Substring(0, vnew.LastIndexOf(".")).Replace(EpisodioOld, EpisodioNew)
-                           Else
-                               vnew = vnew.Substring(0, vnew.LastIndexOf("."))
-                           End If
+                    If EpisodioOld.Length > 2 Then
+                        vnew = vnew.Substring(0, vnew.LastIndexOf(".")).Replace(EpisodioOld, EpisodioNew)
+                    Else
+                        vnew = vnew.Substring(0, vnew.LastIndexOf("."))
+                    End If
 
-                           ProperCase(vnew)
+                    ProperCase(vnew)
 
-                           vnew = vnew.Replace("X2E64", "x264")
-                           vnew = vnew.Replace("S07E20p", "720p")
-                           vnew = vnew.Replace("HS02E64", "H264")
-
-
-                           EspecificosFilmes(vnew)
+                    vnew = vnew.Replace("X2E64", "x264")
+                    vnew = vnew.Replace("S07E20p", "720p")
+                    vnew = vnew.Replace("HS02E64", "H264")
 
 
-                           'If vextensao = ".srt" And vnew.ToUpper.IndexOf(".ENG") = -1 Then
-                           '    vnew = vnew.Replace(".por", "").Replace(".Por", "").Replace(".POR", "")
-                           '    vextensao = ".por.srt"
-                           'End If
+                    EspecificosFilmes(vnew)
 
-                           'somente renomeia se o novo nome for diferente do anterior
-                           If Not arq.Trim = Trim(vnew & vextensao) Then
-                               My.Computer.FileSystem.RenameFile(arq, Trim(vnew & vextensao))
-                               ArquivosRenomeados += 1
-                           End If
+
+                    'If vextensao = ".srt" And vnew.ToUpper.IndexOf(".ENG") = -1 Then
+                    '    vnew = vnew.Replace(".por", "").Replace(".Por", "").Replace(".POR", "")
+                    '    vextensao = ".por.srt"
+                    'End If
+
+                    'somente renomeia se o novo nome for diferente do anterior
+                    If Not arq.Trim = Trim(vnew & vextensao) Then
+                        My.Computer.FileSystem.RenameFile(arq, Trim(vnew & vextensao))
+                        ArquivosRenomeados += 1
+                    End If
 
                 End If
 
