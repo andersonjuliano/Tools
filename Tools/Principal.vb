@@ -7,6 +7,7 @@ Imports Microsoft.Win32
 Imports System.Drawing.Imaging
 'Imports System.Windows.Media.Imaging
 Imports System.Data
+Imports PdfSharp.Pdf
 
 
 ''' <summary>
@@ -84,27 +85,27 @@ Public Class Principal
     End Sub
     Private Sub Principal_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         Try
-            tr.Abort()
-        Catch ex As Exception
-        End Try
-        Try
-            tr.Abort()
+            If Not tr Is Nothing Then
+                tr.Abort()
+            End If
         Catch ex As Exception
         End Try
     End Sub
     Private Sub Principal_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Me.KeyPress
         If Convert.ToInt32(e.KeyChar) = Keys.Escape Then
-            Try
-                tr.Abort()
-            Catch ex As Exception
-            End Try
-            Try
-                tr.Abort()
-            Catch ex As Exception
-            End Try
+            If Not tr Is Nothing Then
+                Try
+                    tr.Abort()
+                Catch ex As Exception
+                End Try
+                Try
+                    tr.Abort()
+                Catch ex As Exception
+                End Try
 
-            Add("Processo abortado")
-            msg("Processo abortado")
+                Add("Processo abortado")
+                msg("Processo abortado")
+            End If
             Maximum(0)
         End If
     End Sub
@@ -249,7 +250,7 @@ Public Class Principal
                 Dim caracter() As String = {" ", ".", "_", "-"}
                 For Each _caracter As String In caracter
                     For Each _preposicao As String In preposicao
-                        value = value.Replace(_caracter & StrConv(_preposicao, VbStrConv.ProperCase) & _caracter, _
+                        value = value.Replace(_caracter & StrConv(_preposicao, VbStrConv.ProperCase) & _caracter,
                                               _caracter & _preposicao & _caracter)
                     Next
                 Next
@@ -420,7 +421,7 @@ Public Class Principal
                     cbr = cbr.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
                 Next
                 Add("Criando arquivo cbr da pasta: " & pasta.Substring(pasta.LastIndexOf("\") + 1, pasta.Length - pasta.LastIndexOf("\") - 1))
-                ZipFile.CreateFromDirectory(pasta, pasta & ".cbz")
+                'ZipFile.CreateFromDirectory(pasta, pasta & ".cbz")
             Catch ex As Exception
                 AddErro("Erro ao criar o arquivo cbz da pasta: " & pasta)
                 AddErro(ex.ToString)
@@ -465,7 +466,7 @@ Public Class Principal
 
                 If arquivo.Substring(arquivo.LastIndexOf(".") + 1).ToUpper = "ZIP" Then
                     Add("Extraindo: " & zip)
-                    ZipFile.ExtractToDirectory(arquivo, CurDir)
+                    'ZipFile.ExtractToDirectory(arquivo, CurDir)
                 ElseIf arquivo.Substring(arquivo.LastIndexOf(".") + 1).ToUpper = "RAR" Then
                     'Add("Extraindo: " & zip)
                     'zip = arquivo.Substring(arquivo.LastIndexOf("\") + 1, arquivo.Length - arquivo.LastIndexOf("\") - 1)
@@ -497,7 +498,7 @@ Public Class Principal
 
             Try
                 Add("Criando arquivo zip da pasta: " & pasta)
-                ZipFile.CreateFromDirectory(pasta, pasta & ".zip")
+                'ZipFile.CreateFromDirectory(pasta, pasta & ".zip")
 
                 'Using zip As New Ionic.Zip.ZipFile(pasta & ".zip")
                 '    'adicionando um diretório
@@ -588,6 +589,9 @@ Public Class Principal
                         vnew = Path.GetFileNameWithoutExtension(arq)
                     End If
                 End If
+
+                vextensao = vextensao.Replace(" ", "").ToLower()
+
                 If cbkMudaExt.Checked Then
                     If vextensao = ".zip" Then
                         vextensao = ".cbz"
@@ -752,8 +756,12 @@ Public Class Principal
                             vnew = vnew.Replace(" v" & index & " ", " Vol." & index & " ")
                         Next
 
-
-
+                        If ckbRemoverNumerados.Checked Then
+                            vArrayChar = vnew.Split(" ")
+                            If IsNumeric(vArrayChar(0).Replace(".", "").Replace(",", "")) Then
+                                vnew = vnew.Replace(vArrayChar(0).Replace(".", "").Replace(",", ""), "")
+                            End If
+                        End If
 
                         vArrayChar = vnew.Split(" ")
                         For Each palavra As String In vArrayChar
@@ -772,7 +780,7 @@ Public Class Principal
                                             End Try
                                         End If
                                     ElseIf PalavraAnterior = "de" Or PalavraAnterior = "(de" Or
-                                           PalavraAnterior = "of" Or PalavraAnterior = "(of" Then
+                                       PalavraAnterior = "of" Or PalavraAnterior = "(of" Then
 
                                         palavra = CDec(palavra).ToString(vmask)
 
@@ -864,6 +872,7 @@ Public Class Principal
                         vnew = vnew.Replace("  ", " ")
                         vnew = vnew.Replace("  ", " ")
                         vnew = vnew.Replace("  ", " ")
+                        vnew = vnew.Replace("_", "-")
 
 
                         'respeita o de -> para
@@ -922,7 +931,7 @@ Public Class Principal
                                 Dim vnewTemp As String = vnew
                                 i = 0
                                 While True
-                                    If Not IO.File.Exists(vnew.Trim & vextensao) Then
+                                    If Not System.IO.File.Exists(vnew.Trim & vextensao) Then
                                         My.Computer.FileSystem.RenameFile(arq, Trim(vnew & vextensao))
                                         Exit While
                                     Else
@@ -998,7 +1007,7 @@ Public Class Principal
                             old = vnew
                             i = 0
                             While True
-                                If Not IO.File.Exists(vnew.Trim) Then
+                                If Not File.Exists(vnew.Trim) Then
                                     My.Computer.FileSystem.RenameDirectory(arq, Trim(vnew))
                                     Exit While
                                 Else
@@ -1059,6 +1068,34 @@ Public Class Principal
         If vnew.ToUpper.Contains("R E B E L D E S") Then
             vnew = StrConv(vnew, VbStrConv.ProperCase)
             vnew = vnew.Replace("R E B E L D E S", "R.E.B.E.L.D.E.S")
+        End If
+
+        If vnew.ToUpper.Contains("V X E") Then
+            vnew = StrConv(vnew, VbStrConv.ProperCase)
+            vnew = vnew.Replace("V X E", "V.X.E.")
+        End If
+
+        If vnew.ToUpper.Contains("B P D P") Then
+            vnew = StrConv(vnew, VbStrConv.ProperCase)
+            vnew = vnew.Replace("B P D P", "B.P.D.P")
+        End If
+
+        If vnew.ToUpper.Contains("Bpdp") Then
+            vnew = StrConv(vnew, VbStrConv.ProperCase)
+            vnew = vnew.Replace("Bpdp", "B.P.D.P")
+        End If
+
+        If vnew.ToUpper.Contains("E S P A D A") Then
+            vnew = StrConv(vnew, VbStrConv.ProperCase)
+            vnew = vnew.Replace("E S P a D a ", "E.S.P.a.D.a. ")
+            vnew = vnew.Replace("E S P A D A ", "E.S.P.a.D.a. ")
+            vnew = vnew.Replace("e s p a d a ", "E.S.P.a.D.a. ")
+        End If
+
+
+        If vnew.ToUpper.Contains(" VOL ") Then
+            vnew = StrConv(vnew, VbStrConv.ProperCase)
+            vnew = vnew.Replace(" Vol ", " Vol.")
         End If
 
 
@@ -1236,7 +1273,7 @@ Public Class Principal
 
             Grava("")
 
-            For Each Dir As String In IO.Directory.GetDirectories(diretorio)
+            For Each Dir As String In Directory.GetDirectories(diretorio)
                 Try
                     ListaDiretorios(Dir, espacamento)
                 Catch ex As Exception
@@ -1437,7 +1474,7 @@ Public Class Principal
                         Else
                             old = vnew
                             While True
-                                If Not IO.File.Exists(vnew.Trim & vextensao) Then
+                                If Not File.Exists(vnew.Trim & vextensao) Then
                                     My.Computer.FileSystem.RenameFile(arq, Trim(vnew & vextensao))
                                     Exit While
                                 Else
@@ -1620,7 +1657,7 @@ Public Class Principal
 
             For Each pasta As String In Directory.GetDirectories(CurDir)
 
-                If Not pasta = CurDir() & "\#repetidas" And _
+                If Not pasta = CurDir() & "\#repetidas" And
                    Not pasta = CurDir() & "\#indefinidas" Then
 
 
@@ -1933,7 +1970,7 @@ Public Class Principal
                         old = vnew
                         Dim i As Integer = 0
                         While True
-                            If Not IO.File.Exists(vnew.Trim) Then
+                            If Not File.Exists(vnew.Trim) Then
                                 My.Computer.FileSystem.RenameDirectory(arq, Trim(vnew))
                                 Exit While
                             Else
@@ -1973,5 +2010,110 @@ Public Class Principal
         Add("Processo concluido")
 
     End Sub
+
+#Region "<< Converter para PDF >>"
+    Private Class WorkerParameters
+        Public Property InputDirectory As String
+        Public Property OutputFile As String
+    End Class
+    Private Sub btnConvertPDF_Click(sender As Object, e As EventArgs) Handles btnConvertPDF.Click
+
+        If dlgFolderSelect.ShowDialog = Windows.Forms.DialogResult.OK Then
+
+
+            If Not bwMakePdf.IsBusy Then
+                'Create and fill up WorkerParameters object.
+                Dim info As New WorkerParameters
+                With info
+                    .InputDirectory = dlgFolderSelect.SelectedPath
+                    .OutputFile = dlgFolderSelect.SelectedPath & ".pdf"
+                End With
+                'Start thread using "info" object as Argument
+                bwMakePdf.RunWorkerAsync(info)
+            Else
+                MsgBox("Thread is busy.", vbExclamation, "Busy.")
+            End If
+        End If
+    End Sub
+
+    Private Sub bwMakePdf_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bwMakePdf.DoWork
+        'Create new PDF Document.
+        Using pdf As New PdfDocument
+            'Get parameter to process PDF.
+            Dim info As WorkerParameters = DirectCast(e.Argument, WorkerParameters)
+
+            'Find all files on source directory (sub-directories not included).
+            Dim allFiles = Directory.GetFiles(info.InputDirectory, "*.*", SearchOption.TopDirectoryOnly)
+
+            'Function to find compatible file types.
+            'In .NET 4.0, you can use LINQ to do this.
+            Dim findMatch = Function(filePath As String)
+                                'PDFSharp only supports PNG, BMP, JPG, and GIF.
+                                Return filePath.ToLower.EndsWith(".png") Or
+                                       filePath.ToLower.EndsWith(".bmp") Or
+                                       filePath.ToLower.EndsWith(".jpg") Or
+                                       filePath.ToLower.EndsWith(".gif")
+                            End Function
+
+            'Find entire array.
+            Dim filesToProcess = Array.FindAll(Of String)(allFiles, findMatch)
+
+            'Get file count.
+            Dim fileCount As Integer = filesToProcess.Length - 1
+
+            'Add PDF pages.
+            For i As Integer = 0 To fileCount
+                'Check if operation is cancelled.
+                If bwMakePdf.CancellationPending Then
+                    Exit For
+                End If
+
+                'Create new PDF page.
+                Dim page = pdf.AddPage()
+
+                'Create XImage object from file.
+                Using xImg = PdfSharp.Drawing.XImage.FromFile(filesToProcess(i))
+                    'Resize page Width and Height to fit picture size.
+                    page.Width = xImg.PixelWidth * 72 / xImg.HorizontalResolution
+                    page.Height = xImg.PixelHeight * 72 / xImg.HorizontalResolution
+
+                    'Draw current image file to page.
+                    Dim GR = PdfSharp.Drawing.XGraphics.FromPdfPage(page)
+                    GR.DrawImage(xImg, 0, 0, page.Width, page.Height)
+                End Using
+
+                'Report progress.
+                bwMakePdf.ReportProgress((i / fileCount) * 100)
+            Next
+
+            'Erase all items in array. Memory leaking free...
+            Erase filesToProcess
+
+            'Save to PDF file.
+            pdf.Save(info.OutputFile)
+        End Using
+    End Sub
+
+    Private Sub bwMakePdf_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles bwMakePdf.ProgressChanged
+        'Show progress to user
+        pBar.Value = e.ProgressPercentage
+        mensagem.Text = "Processando: " & e.ProgressPercentage & "% concluida..."
+    End Sub
+
+    Private Sub bwMakePdf_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bwMakePdf.RunWorkerCompleted
+        If e.Cancelled Then
+            MsgBox("Operation has been cancelled.", vbInformation, "Cancelled.")
+        Else
+            MsgBox("Conversão para PDF concluída.", vbInformation, "Successo!")
+        End If
+        mensagem.Text = ""
+        pBar.Value = 0
+
+    End Sub
+
+
+
+#End Region
+
 
 End Class
