@@ -18,35 +18,35 @@ Public Class Principal
 
     Private Sub Principal_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        With ToolTip1
+        'With ToolTip1
 
-            '1ª coluna
-            .SetToolTip(btnCriaCbr, "Cria um arquivo .cbz apartir de todas as pastas que estão no diretório raiz" & vbCrLf &
-                                    "A tabela de replace será utilizada." & vbCrLf &
-                                    "O nome será propercase")
-            .SetToolTip(btnRenomeia, "")
+        '    '1ª coluna
+        '    .SetToolTip(btnCriaCbr, "Cria um arquivo .cbz apartir de todas as pastas que estão no diretório raiz" & vbCrLf &
+        '                            "A tabela de replace será utilizada." & vbCrLf &
+        '                            "O nome será propercase")
+        '    .SetToolTip(btnRenomeia, "")
 
-            '2ª coluna
-            .SetToolTip(btnDescompacta, "Descompacta todos os arquivos compactados que estão na pasta raiz")
-            .SetToolTip(btnCompacta, "Compacta todas as pastas que estão no diretório raiz" & vbCrLf &
-                                     "O nome do arquivo compactado será o mesmo da pasta")
+        '    '2ª coluna
+        '    .SetToolTip(btnDescompacta, "Descompacta todos os arquivos compactados que estão na pasta raiz")
+        '    .SetToolTip(btnCompacta, "Compacta todas as pastas que estão no diretório raiz" & vbCrLf &
+        '                             "O nome do arquivo compactado será o mesmo da pasta")
 
 
-            '3ª coluna
-            .SetToolTip(btnListaArquivos, "Lista todos os arquivos que estão em um diretório e nos sub-diretórioa")
-            .SetToolTip(btnLegenda, "Troca os caracteres especiais das legendas pela entities correspondente")
+        '    '3ª coluna
+        '    .SetToolTip(btnListaArquivos, "Lista todos os arquivos que estão em um diretório e nos sub-diretórios")
+        '    .SetToolTip(btnLegenda, "Troca os caracteres especiais das legendas pela entities correspondente")
 
-            '4ª coluna
-            .SetToolTip(btnRenomeiaFotos, "Renomeias as fotos com a seguinte mascara:" & vbNewLine &
-                                           "   yyyy-MM-dd HH.mm.ss com a data que tirou a foto ou da data de criação")
-            .SetToolTip(btnRomsDs, "Remove a numeração padrão no nome das roms de DS")
+        '    '4ª coluna
+        '    .SetToolTip(btnRenomeiaFotos, "Renomeias as fotos com a seguinte mascara:" & vbNewLine &
+        '                                   "   yyyy-MM-dd HH.mm.ss com a data que tirou a foto ou da data de criação")
+        '    .SetToolTip(btnRomsDs, "Remove a numeração padrão no nome das roms de DS")
 
-            '5ª Coluna
-            .SetToolTip(btnCorrigeSerie, "Renomeia corretamente a temporada e numero de episódio das séries (1017 -> S10E17)")
+        '    '5ª Coluna
+        '    .SetToolTip(btnCorrigeSerie, "Renomeia corretamente a temporada e numero de episódio das séries (1017 -> S10E17)")
 
-            '5ª Coluna
-            .SetToolTip(btnCorrigeRoms, "Irá deletar as roms repetidas do set No-Intro, também as de lingua muito diferente")
-        End With
+        '    '5ª Coluna
+        '    '.SetToolTip(btnCorrigeRoms, "Irá deletar as roms repetidas do set No-Intro, também as de lingua muito diferente")
+        'End With
 
 
 
@@ -80,6 +80,7 @@ Public Class Principal
         Add("27/04/2017 - Correções de bugs ao mudar somente para letras minúsculas <-> maiúsculas")
         Add("02/05/2017 - Correções de bugs ao renomear arquivos com numeral romano (I, II, III)")
         Add("13/04/2018 - Separado os log de erro")
+        Add("11/07/2024 - Atualização da versão do Framework")
 
 
     End Sub
@@ -410,8 +411,12 @@ Public Class Principal
     End Sub
     Private Sub CriaCBR()
 
+        Dim pastas As List(Of String) = New List(Of String)
+
         For Each pasta As String In Directory.GetDirectories(CurDir)
             Try
+                pastas.Add(pasta)
+
                 Dim cbr As String = pasta
                 For Each dr As DataGridViewRow In dg.Rows
                     cbr = cbr.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
@@ -421,13 +426,27 @@ Public Class Principal
                     cbr = cbr.Replace(dr.Cells("de").Value, dr.Cells("para").Value)
                 Next
                 Add("Criando arquivo cbr da pasta: " & pasta.Substring(pasta.LastIndexOf("\") + 1, pasta.Length - pasta.LastIndexOf("\") - 1))
-                'ZipFile.CreateFromDirectory(pasta, pasta & ".cbz")
+                ZipFile.CreateFromDirectory(pasta, pasta & ".cbz")
+
             Catch ex As Exception
                 AddErro("Erro ao criar o arquivo cbz da pasta: " & pasta)
                 AddErro(ex.ToString)
-            Finally
             End Try
+
+            Try
+
+                System.IO.Directory.Delete(pasta, True)
+
+            Catch ex As Exception
+                AddErro("Erro ao excluir a pasta: " & pasta)
+                AddErro(ex.ToString)
+            End Try
+
+
         Next
+
+
+
         For Each arquivo As String In Directory.GetFiles(CurDir)
             Dim zip As String = ""
             Try
@@ -466,7 +485,7 @@ Public Class Principal
 
                 If arquivo.Substring(arquivo.LastIndexOf(".") + 1).ToUpper = "ZIP" Then
                     Add("Extraindo: " & zip)
-                    'ZipFile.ExtractToDirectory(arquivo, CurDir)
+                    ZipFile.ExtractToDirectory(arquivo, CurDir)
                 ElseIf arquivo.Substring(arquivo.LastIndexOf(".") + 1).ToUpper = "RAR" Then
                     'Add("Extraindo: " & zip)
                     'zip = arquivo.Substring(arquivo.LastIndexOf("\") + 1, arquivo.Length - arquivo.LastIndexOf("\") - 1)
@@ -498,7 +517,7 @@ Public Class Principal
 
             Try
                 Add("Criando arquivo zip da pasta: " & pasta)
-                'ZipFile.CreateFromDirectory(pasta, pasta & ".zip")
+                ZipFile.CreateFromDirectory(pasta, pasta & ".zip")
 
                 'Using zip As New Ionic.Zip.ZipFile(pasta & ".zip")
                 '    'adicionando um diretório
@@ -507,7 +526,7 @@ Public Class Principal
                 '    zip.Save()
                 'End Using
             Catch ex As Exception
-                AddErro("Erro ao criar o arquivo cbr da pasta: " & pasta)
+                AddErro("Erro ao criar o arquivo zip da pasta: " & pasta)
                 AddErro(ex.ToString)
             Finally
             End Try

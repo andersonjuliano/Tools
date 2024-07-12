@@ -41,6 +41,8 @@ Partial Class Principal
         Me.btnListaArquivos = New System.Windows.Forms.Button()
         Me.btnRenomeia = New System.Windows.Forms.Button()
         Me.pnlCheckBox = New System.Windows.Forms.Panel()
+        Me.ckbExcluirPasta = New System.Windows.Forms.CheckBox()
+        Me.ckbRemoverNumerados = New System.Windows.Forms.CheckBox()
         Me.ckbNumerados = New System.Windows.Forms.CheckBox()
         Me.ckbRecursivo = New System.Windows.Forms.CheckBox()
         Me.cbkMudaExt = New System.Windows.Forms.CheckBox()
@@ -66,7 +68,6 @@ Partial Class Principal
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.dlgFolderSelect = New System.Windows.Forms.FolderBrowserDialog()
         Me.bwMakePdf = New System.ComponentModel.BackgroundWorker()
-        Me.ckbRemoverNumerados = New System.Windows.Forms.CheckBox()
         Me.pnlbuttons.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.pnlCheckBox.SuspendLayout()
@@ -78,25 +79,25 @@ Partial Class Principal
         '
         'btnCriaCbr
         '
-        Me.btnCriaCbr.Enabled = False
         Me.btnCriaCbr.Location = New System.Drawing.Point(17, 11)
         Me.btnCriaCbr.Margin = New System.Windows.Forms.Padding(4)
         Me.btnCriaCbr.Name = "btnCriaCbr"
         Me.btnCriaCbr.Size = New System.Drawing.Size(144, 28)
         Me.btnCriaCbr.TabIndex = 0
         Me.btnCriaCbr.Text = "Cria cbz"
-        Me.ToolTip1.SetToolTip(Me.btnCriaCbr, "teste")
+        Me.ToolTip1.SetToolTip(Me.btnCriaCbr, "Cria um arquivo .cbz apartir de todas as pastas que estão no diretório raiz" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "A ta" &
+        "bela de replace será utilizada." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "O nome será propercase")
         Me.btnCriaCbr.UseVisualStyleBackColor = True
         '
         'btnDescompacta
         '
-        Me.btnDescompacta.Enabled = False
         Me.btnDescompacta.Location = New System.Drawing.Point(169, 11)
         Me.btnDescompacta.Margin = New System.Windows.Forms.Padding(4)
         Me.btnDescompacta.Name = "btnDescompacta"
         Me.btnDescompacta.Size = New System.Drawing.Size(144, 28)
         Me.btnDescompacta.TabIndex = 1
         Me.btnDescompacta.Text = "Descompacta"
+        Me.ToolTip1.SetToolTip(Me.btnDescompacta, "Descompacta todos os arquivos compactados que estão na pasta raiz")
         Me.btnDescompacta.UseVisualStyleBackColor = True
         '
         'log
@@ -152,6 +153,7 @@ Partial Class Principal
         Me.btnConvertPDF.Size = New System.Drawing.Size(144, 28)
         Me.btnConvertPDF.TabIndex = 8
         Me.btnConvertPDF.Text = "Converter PDF"
+        Me.ToolTip1.SetToolTip(Me.btnConvertPDF, "Cria um PDF apartir de uma pasta com imagens")
         Me.btnConvertPDF.UseVisualStyleBackColor = True
         '
         'btnCriarPastas
@@ -182,6 +184,8 @@ Partial Class Principal
         Me.btnCorrigeRoms.Size = New System.Drawing.Size(144, 28)
         Me.btnCorrigeRoms.TabIndex = 14
         Me.btnCorrigeRoms.Text = "Corrige No-Intro"
+        Me.ToolTip1.SetToolTip(Me.btnCorrigeRoms, "Irá deletar as roms repetidas do set No-Intro, também as de lingua muito diferent" &
+        "e")
         Me.btnCorrigeRoms.UseVisualStyleBackColor = True
         '
         'btnCorrigeSerie
@@ -192,6 +196,8 @@ Partial Class Principal
         Me.btnCorrigeSerie.Size = New System.Drawing.Size(144, 28)
         Me.btnCorrigeSerie.TabIndex = 14
         Me.btnCorrigeSerie.Text = "Corrige Ep. Série"
+        Me.ToolTip1.SetToolTip(Me.btnCorrigeSerie, "Renomeia corretamente a temporada e numero de episódio das séries (1017 -> S10E17" &
+        ")")
         Me.btnCorrigeSerie.UseVisualStyleBackColor = True
         '
         'btnRomsDs
@@ -202,6 +208,7 @@ Partial Class Principal
         Me.btnRomsDs.Size = New System.Drawing.Size(144, 28)
         Me.btnRomsDs.TabIndex = 13
         Me.btnRomsDs.Text = "Roms DS"
+        Me.ToolTip1.SetToolTip(Me.btnRomsDs, "Remove a numeração padrão no nome das roms de DS")
         Me.btnRomsDs.UseVisualStyleBackColor = True
         '
         'btnLegenda
@@ -212,17 +219,19 @@ Partial Class Principal
         Me.btnLegenda.Size = New System.Drawing.Size(144, 28)
         Me.btnLegenda.TabIndex = 12
         Me.btnLegenda.Text = "Arruma Legenda"
+        Me.ToolTip1.SetToolTip(Me.btnLegenda, "Troca os caracteres especiais das legendas pela entities correspondente")
         Me.btnLegenda.UseVisualStyleBackColor = True
         '
         'btnCompacta
         '
-        Me.btnCompacta.Enabled = False
         Me.btnCompacta.Location = New System.Drawing.Point(169, 46)
         Me.btnCompacta.Margin = New System.Windows.Forms.Padding(4)
         Me.btnCompacta.Name = "btnCompacta"
         Me.btnCompacta.Size = New System.Drawing.Size(144, 28)
         Me.btnCompacta.TabIndex = 5
         Me.btnCompacta.Text = "Compacta Pastas"
+        Me.ToolTip1.SetToolTip(Me.btnCompacta, "Compacta todas as pastas que estão no diretório raiz" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "O nome do arquivo compactad" &
+        "o será o mesmo da pasta")
         Me.btnCompacta.UseVisualStyleBackColor = True
         '
         'btnRenomeiaFotos
@@ -233,6 +242,8 @@ Partial Class Principal
         Me.btnRenomeiaFotos.Size = New System.Drawing.Size(144, 28)
         Me.btnRenomeiaFotos.TabIndex = 7
         Me.btnRenomeiaFotos.Text = "Renomeia Fotos"
+        Me.ToolTip1.SetToolTip(Me.btnRenomeiaFotos, "Renomeias as fotos com a seguinte mascara" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  yyyy-MM-dd HH.mm.ss com a data que t" &
+        "irou a foto ou da data de criação")
         Me.btnRenomeiaFotos.UseVisualStyleBackColor = True
         '
         'btnListaArquivos
@@ -243,6 +254,8 @@ Partial Class Principal
         Me.btnListaArquivos.Size = New System.Drawing.Size(144, 28)
         Me.btnListaArquivos.TabIndex = 7
         Me.btnListaArquivos.Text = "Lista Arquivos"
+        Me.ToolTip1.SetToolTip(Me.btnListaArquivos, "Lista todos os arquivos que estão em um diretório e nos sub-diretórios" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "será cria" &
+        "do um arquivo Lista.txt")
         Me.btnListaArquivos.UseVisualStyleBackColor = True
         '
         'btnRenomeia
@@ -257,6 +270,7 @@ Partial Class Principal
         '
         'pnlCheckBox
         '
+        Me.pnlCheckBox.Controls.Add(Me.ckbExcluirPasta)
         Me.pnlCheckBox.Controls.Add(Me.ckbRemoverNumerados)
         Me.pnlCheckBox.Controls.Add(Me.ckbNumerados)
         Me.pnlCheckBox.Controls.Add(Me.ckbRecursivo)
@@ -275,13 +289,36 @@ Partial Class Principal
         Me.pnlCheckBox.Size = New System.Drawing.Size(515, 119)
         Me.pnlCheckBox.TabIndex = 13
         '
+        'ckbExcluirPasta
+        '
+        Me.ckbExcluirPasta.AutoSize = True
+        Me.ckbExcluirPasta.Location = New System.Drawing.Point(217, 86)
+        Me.ckbExcluirPasta.Margin = New System.Windows.Forms.Padding(4)
+        Me.ckbExcluirPasta.Name = "ckbExcluirPasta"
+        Me.ckbExcluirPasta.Size = New System.Drawing.Size(110, 21)
+        Me.ckbExcluirPasta.TabIndex = 14
+        Me.ckbExcluirPasta.Text = "Excluir pasta"
+        Me.ToolTip1.SetToolTip(Me.ckbExcluirPasta, "Ao criar o cbz, se estiver marcado apaga a pasta de origem")
+        Me.ckbExcluirPasta.UseVisualStyleBackColor = True
+        '
+        'ckbRemoverNumerados
+        '
+        Me.ckbRemoverNumerados.AutoSize = True
+        Me.ckbRemoverNumerados.Location = New System.Drawing.Point(21, 86)
+        Me.ckbRemoverNumerados.Margin = New System.Windows.Forms.Padding(4)
+        Me.ckbRemoverNumerados.Name = "ckbRemoverNumerados"
+        Me.ckbRemoverNumerados.Size = New System.Drawing.Size(164, 21)
+        Me.ckbRemoverNumerados.TabIndex = 13
+        Me.ckbRemoverNumerados.Text = "Remover Numerados"
+        Me.ckbRemoverNumerados.UseVisualStyleBackColor = True
+        '
         'ckbNumerados
         '
         Me.ckbNumerados.AutoSize = True
         Me.ckbNumerados.Location = New System.Drawing.Point(217, 66)
         Me.ckbNumerados.Margin = New System.Windows.Forms.Padding(4)
         Me.ckbNumerados.Name = "ckbNumerados"
-        Me.ckbNumerados.Size = New System.Drawing.Size(100, 20)
+        Me.ckbNumerados.Size = New System.Drawing.Size(103, 21)
         Me.ckbNumerados.TabIndex = 12
         Me.ckbNumerados.Text = "Numerados"
         Me.ckbNumerados.UseVisualStyleBackColor = True
@@ -294,7 +331,7 @@ Partial Class Principal
         Me.ckbRecursivo.Location = New System.Drawing.Point(217, 46)
         Me.ckbRecursivo.Margin = New System.Windows.Forms.Padding(4)
         Me.ckbRecursivo.Name = "ckbRecursivo"
-        Me.ckbRecursivo.Size = New System.Drawing.Size(90, 20)
+        Me.ckbRecursivo.Size = New System.Drawing.Size(93, 21)
         Me.ckbRecursivo.TabIndex = 12
         Me.ckbRecursivo.Text = "Recursivo"
         Me.ckbRecursivo.UseVisualStyleBackColor = True
@@ -305,7 +342,7 @@ Partial Class Principal
         Me.cbkMudaExt.Location = New System.Drawing.Point(380, 25)
         Me.cbkMudaExt.Margin = New System.Windows.Forms.Padding(4)
         Me.cbkMudaExt.Name = "cbkMudaExt"
-        Me.cbkMudaExt.Size = New System.Drawing.Size(81, 20)
+        Me.cbkMudaExt.Size = New System.Drawing.Size(89, 21)
         Me.cbkMudaExt.TabIndex = 12
         Me.cbkMudaExt.Text = "rar -> cbr"
         Me.cbkMudaExt.UseVisualStyleBackColor = True
@@ -316,7 +353,7 @@ Partial Class Principal
         Me.ckbFilmes.Location = New System.Drawing.Point(380, 4)
         Me.ckbFilmes.Margin = New System.Windows.Forms.Padding(4)
         Me.ckbFilmes.Name = "ckbFilmes"
-        Me.ckbFilmes.Size = New System.Drawing.Size(69, 20)
+        Me.ckbFilmes.Size = New System.Drawing.Size(70, 21)
         Me.ckbFilmes.TabIndex = 12
         Me.ckbFilmes.Text = "Filmes"
         Me.ckbFilmes.UseVisualStyleBackColor = True
@@ -329,7 +366,7 @@ Partial Class Principal
         Me.ckbScan.Location = New System.Drawing.Point(219, 25)
         Me.ckbScan.Margin = New System.Windows.Forms.Padding(4)
         Me.ckbScan.Name = "ckbScan"
-        Me.ckbScan.Size = New System.Drawing.Size(84, 20)
+        Me.ckbScan.Size = New System.Drawing.Size(87, 21)
         Me.ckbScan.TabIndex = 12
         Me.ckbScan.Text = "Scan/HQ"
         Me.ckbScan.UseVisualStyleBackColor = True
@@ -342,7 +379,7 @@ Partial Class Principal
         Me.ckbPreservaExtensao.Location = New System.Drawing.Point(219, 4)
         Me.ckbPreservaExtensao.Margin = New System.Windows.Forms.Padding(4)
         Me.ckbPreservaExtensao.Name = "ckbPreservaExtensao"
-        Me.ckbPreservaExtensao.Size = New System.Drawing.Size(143, 20)
+        Me.ckbPreservaExtensao.Size = New System.Drawing.Size(149, 21)
         Me.ckbPreservaExtensao.TabIndex = 12
         Me.ckbPreservaExtensao.Text = "Preserva Extensão"
         Me.ckbPreservaExtensao.UseVisualStyleBackColor = True
@@ -355,7 +392,7 @@ Partial Class Principal
         Me.ckbProperCase.Location = New System.Drawing.Point(21, 4)
         Me.ckbProperCase.Margin = New System.Windows.Forms.Padding(4)
         Me.ckbProperCase.Name = "ckbProperCase"
-        Me.ckbProperCase.Size = New System.Drawing.Size(176, 20)
+        Me.ckbProperCase.Size = New System.Drawing.Size(186, 21)
         Me.ckbProperCase.TabIndex = 8
         Me.ckbProperCase.Text = "Primeira Letra Maiúscula"
         Me.ckbProperCase.UseVisualStyleBackColor = True
@@ -368,7 +405,7 @@ Partial Class Principal
         Me.ckbPreprosicao.Location = New System.Drawing.Point(21, 25)
         Me.ckbPreprosicao.Margin = New System.Windows.Forms.Padding(4)
         Me.ckbPreprosicao.Name = "ckbPreprosicao"
-        Me.ckbPreprosicao.Size = New System.Drawing.Size(160, 20)
+        Me.ckbPreprosicao.Size = New System.Drawing.Size(166, 21)
         Me.ckbPreprosicao.TabIndex = 9
         Me.ckbPreprosicao.Text = "Preserva preprosição"
         Me.ckbPreprosicao.UseVisualStyleBackColor = True
@@ -381,7 +418,7 @@ Partial Class Principal
         Me.ckbArquivo.Location = New System.Drawing.Point(21, 66)
         Me.ckbArquivo.Margin = New System.Windows.Forms.Padding(4)
         Me.ckbArquivo.Name = "ckbArquivo"
-        Me.ckbArquivo.Size = New System.Drawing.Size(149, 20)
+        Me.ckbArquivo.Size = New System.Drawing.Size(155, 21)
         Me.ckbArquivo.TabIndex = 11
         Me.ckbArquivo.Text = "Renomear Arquivos"
         Me.ckbArquivo.UseVisualStyleBackColor = True
@@ -394,7 +431,7 @@ Partial Class Principal
         Me.ckbPasta.Location = New System.Drawing.Point(21, 46)
         Me.ckbPasta.Margin = New System.Windows.Forms.Padding(4)
         Me.ckbPasta.Name = "ckbPasta"
-        Me.ckbPasta.Size = New System.Drawing.Size(154, 20)
+        Me.ckbPasta.Size = New System.Drawing.Size(161, 21)
         Me.ckbPasta.TabIndex = 10
         Me.ckbPasta.Text = "Renomear Diretórios"
         Me.ckbPasta.UseVisualStyleBackColor = True
@@ -507,17 +544,6 @@ Partial Class Principal
         Me.bwMakePdf.WorkerReportsProgress = True
         Me.bwMakePdf.WorkerSupportsCancellation = True
         '
-        'ckbRemoverNumerados
-        '
-        Me.ckbRemoverNumerados.AutoSize = True
-        Me.ckbRemoverNumerados.Location = New System.Drawing.Point(21, 86)
-        Me.ckbRemoverNumerados.Margin = New System.Windows.Forms.Padding(4)
-        Me.ckbRemoverNumerados.Name = "ckbRemoverNumerados"
-        Me.ckbRemoverNumerados.Size = New System.Drawing.Size(159, 20)
-        Me.ckbRemoverNumerados.TabIndex = 13
-        Me.ckbRemoverNumerados.Text = "Remover Numerados"
-        Me.ckbRemoverNumerados.UseVisualStyleBackColor = True
-        '
         'Principal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -589,4 +615,5 @@ Partial Class Principal
     Friend WithEvents dlgFolderSelect As FolderBrowserDialog
     Friend WithEvents bwMakePdf As System.ComponentModel.BackgroundWorker
     Friend WithEvents ckbRemoverNumerados As CheckBox
+    Friend WithEvents ckbExcluirPasta As CheckBox
 End Class
